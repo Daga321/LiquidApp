@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>En construcción | Under construction</title>
+  <style>
+    :root {
+      --morado: #B39DDB;
+      --verde: #C8E6C9;
+      --text-dark: #2e2e2e;
+      --text-light: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      width: 100vw;
+      background: linear-gradient(135deg, var(--verde), var(--morado));
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: var(--text-dark);
+    }
+
+    .card {
+      background-color: #ffffffdd;
+      border-radius: 1.5rem;
+      padding: 3rem 2rem;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      max-width: 600px;
+      width: 90%;
+      position: relative;
+      transition: all 0.5s ease-in-out;
+      animation: fadeIn 1s ease-in-out;
+      min-height: 280px; 
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .message {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      transition: opacity 0.5s ease-in-out;
+      overflow-wrap: break-word;
+      padding: 0 10px;
+    }
+
+    .emoji {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="emoji">🚧</div>
+    <div id="message" class="message"></div>
+  </div>
+
+  <script>
+    const messages = [
+      "🛠️ Estamos construyendo algo tan genial que hasta los bits están emocionados... ¡Vuelve pronto! 😎",
+      "🛠️ We're building something so cool even the bits are excited... Come back soon! 😎"
+    ];
+
+    let index = 0;
+    const messageDiv = document.getElementById("message");
+
+    function updateMessage() {
+      messageDiv.style.opacity = 0;
+      setTimeout(() => {
+        messageDiv.innerHTML = messages[index];
+        messageDiv.style.opacity = 1;
+      }, 500);
+    }
+
+    // Primer mensaje desde JS
+    updateMessage();
+
+    // Rotación cada 4 segundos
+    setInterval(() => {
+      index = (index + 1) % messages.length;
+      updateMessage();
+    }, 4000);
+  </script>
+</body>
+</html>
