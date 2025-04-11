@@ -1,0 +1,126 @@
+tr.moving {
+    position: relative;
+    z-index: 2;
+    transition: transform 1s ease, box-shadow 1s ease;
+}
+
+/* simulet origin row elevate */
+tr.to-up {
+    animation: elevate-down 1s forwards;
+}
+
+tr.to-down {
+    animation: elevate-up 1s forwards;
+}
+
+@keyframes elevate-up {
+    0% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+
+    30% {
+        transform: translateY(20%) scale(1.02);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    60% {
+        transform: translateY(80%) scale(1.02);
+    }
+
+    100% {
+        transform: translateY(100%) scale(1);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
+@keyframes elevate-down {
+    0% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+
+    30% {
+        transform: translateY(-20%) scale(1.02);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    60% {
+        transform: translateY(-80%) scale(1.02);
+    }
+
+    100% {
+        transform: translateY(-100%) scale(1);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
+/* Simulate destiny row sink */
+tr.from-up {
+    animation: sink-up 1s forwards;
+}
+
+tr.from-down {
+    animation: sink-down 1s forwards;
+}
+
+@keyframes sink-up {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    30% {
+        transform: translateY(20%) scale(0.9);
+        opacity: 0.6;
+    }
+
+    60% {
+        transform: translateY(80%) scale(0.9);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translateY(100%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes sink-down {
+    0% {
+        transform: translateY(-0) scale(1);
+        opacity: 1;
+    }
+
+    30% {
+        transform: translateY(-20%) scale(0.9);
+        opacity: 0.6;
+    }
+
+    60% {
+        transform: translateY(-80%) scale(0.9);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translateY(-100%) scale(1);
+        opacity: 1;
+    }
+}
+
+
+tr.removing-zoom {
+    animation: zoom-fade-out 0.6s ease forwards;
+}
+
+@keyframes zoom-fade-out {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+}
