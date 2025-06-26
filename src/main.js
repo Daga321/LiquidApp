@@ -1,7 +1,12 @@
-import './css/style.css'
-import './css/variables.css'
+// These stylesheets are essential for the base layout and should be loaded in the index to prevent layout shifts.
+// import './css/Style.css'
+// import './css/Variables.css'
+
 import './css/TableAnimations.css'
 import './css/Toast.css'
+import './css/Table.css';
+import './css/Adjustments.css';
+import './css/FormElements.css';
 
 
 import './js/objects/Adjustment.js'

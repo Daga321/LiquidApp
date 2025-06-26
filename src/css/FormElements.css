@@ -1,0 +1,52 @@
+/* Styles for radio buttons and form elements extracted from Style.css */
+.radio-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid var(--color-success);
+    border-radius: var(--radius-medium);
+    cursor: pointer;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    margin-right: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+input[type="radio"]::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transform: scale(0);
+    transition: transform 0.2s ease-in-out;
+}
+
+input[type="radio"]:checked::before {
+    transform: scale(1);
+}
+
+button.button:disabled {
+    background-color: var(--gray-medium);
+    cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+    .radio-group {
+        flex-direction: column;
+    }
+}

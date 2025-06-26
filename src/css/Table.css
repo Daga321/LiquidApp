@@ -1,0 +1,52 @@
+/* Styles for tables and table actions extracted from Style.css */
+.table-wrapper {
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-large);
+    overflow: hidden;
+}
+
+.fixed-table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.fixed-table th,
+.fixed-table td {
+    padding: 0.5rem;
+    border: 1px solid var(--color-primary);
+}
+
+.fixed-table input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.table-actions {
+    white-space: nowrap;
+}
+
+.table-actions button {
+    background-color: var(--color-secondary);
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--radius-small);
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0 2px;
+}
+
+.table-actions button:hover {
+    background-color: var(--green-soft);
+}
+
+.table-actions .delete-btn {
+    background-color: var(--color-danger-light);
+    color: var(--red-strong);
+}
+
+.table-actions .delete-btn:hover {
+    background-color: var(--color-danger-hover);
+}
