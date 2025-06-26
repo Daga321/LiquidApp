@@ -1,0 +1,60 @@
+<div class="form-group">
+    <label>Tipo de servicio</label>
+    <select id="service-name-select" class="custom-select" onchange="toggleServiceInput()">
+        <option value="agua">Agua + Aseo + Alcantarillado</option>
+        <option value="gas">Gas</option>
+        <option value="luz">Luz</option>
+        <option value="Otro">Otro</option>
+    </select>
+</div>
+
+<div class="hidden" id="collection-service-name">
+    <label>Ingrese el nombre del servicio</label>
+    <input type="text" id="service-name-input">
+</div>
+
+<div class="form-group">
+    <label for="billing-period-start">Inicio del periodo de facturación</label>
+    <input type="date" id="billing-period-start">
+</div>
+
+<div class="form-group">
+    <label for="billing-period-end">Fin del periodo de facturación</label>
+    <input type="date" id="billing-period-end">
+</div>
+
+<div class="form-group">
+    <label for="due-date">Fecha límite de pago</label>
+    <input type="date" id="due-date">
+</div>
+
+<div class="form-group">
+    <label>Contador</label>
+    <div class="radio-group">
+        <label><input type="radio" id="single-meter" name="meter" value="single-meter" onclick="toggleMeterInputs()"
+                checked>
+            Único</label>
+        <label><input type="radio" id="multiple-meter" name="meter" value="multiple-meter"
+                onclick="toggleMeterInputs()">
+            Independientes internos</label>
+    </div>
+</div>
+
+<div class="form-group" id="invoice-value-collection">
+    <label for="invoice-value">Valor total del recibo</label>
+    <input type="number" min="1" id="invoice-value" placeholder="$0.00">
+</div>
+
+<div class="hidden" id="collection-unit">
+    <label for="unit">Unidad de cobro (Ej: m³, kWh, etc.)</label>
+    <input type="text" id="unit" placeholder="Ej: m³">
+</div>
+
+<div class="hidden" id="unit-cost">
+    <label for="service-amount">Costo por unidad</label>
+    <input type="number" min="1" id="service-amount" placeholder="$0.000">
+</div>
+
+<div class="btn-actions">
+    <button class="button" id="GeneralData-NextButton" onclick="manager.setGeneralDataValue()">Siguiente</button>
+</div>

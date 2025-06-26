@@ -1,0 +1,47 @@
+<h2 id="service-name-information" class="section-title"></h2>
+
+<div class="form-group full-width no-padding">
+    <table class="layout-table">
+        <tr>
+            <td class="label-cell">
+                <label id="liquidationDateLabel">Fecha de liquidación:</label>
+            </td>
+            <td class="value-cell" rowspan="2">
+                <!-- Dinamically show day until due date or "PAGO URGENTE" -->
+                <label id="urgent-payment"></label>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-cell">
+                <label id="dueDateLabel">Fecha límite de pago:</label>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="form-group" id="unit-or-person-value">
+    <label id="unit-cost-information"></label><!-- dinamicalty show unit cost or value per person-->
+</div>
+
+<div class="table-wrapper resulTableWraper">
+    <table class="fixed-table resultTable">
+        <thead>
+            <tr>
+                <th>Propiedad</th>
+                <th>Método de liquidación</th>
+                <th>Base</th>
+                <th>Consumo liquidado</th>
+                <th>Ajustes</th>
+                <th>Total a pagar</th>
+            </tr>
+        </thead>
+        <tbody id="properties-table-body">
+            <!-- Dinamically shows properties inforamtion -->
+        </tbody>
+    </table>
+</div>
+
+<div class="btn-actions">
+    <button class="button" onclick="prevStep()">Atrás</button>
+    <button class="button" onclick="shareResults()">Copiar para enviar</button>
+</div>

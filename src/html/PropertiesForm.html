@@ -1,0 +1,36 @@
+<div class="form-group" id="property-name-group">
+    <label for="property-name">Nombre del local/apartamento</label>
+    <input type="text" id="property-name" placeholder="Ej: Local 1, Apto 101">
+</div>
+
+<div class="form-group" id="liquidation-method-group">
+    <label>Método de liquidación</label>
+    <div id="liquidation-method" class="radio-group">
+        <label><input type="radio" name="method" id="percentage"> Porcentaje</label>
+        <label><input type="radio" name="method" id="number-of-people"> Número de personas</label>
+    </div>
+</div>
+
+<div class="form-group">
+    <button class="button" id="AddPropertyButton" onclick="manager.addProperty()">Agregar</button>
+</div>
+
+<div class="table-wrapper">
+    <table class="fixed-table" id="properties-table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Valor</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Dinamicly generated Rows -->
+        </tbody>
+    </table>
+</div>
+
+<div class="btn-actions">
+    <button class="button" onclick="prevStep()">Atrás</button>
+    <button class="button" id="PropertiesForm-NextButton" onclick="manager.setPropertiesFormValue()">Siguiente</button>
+</div>

@@ -1,0 +1,55 @@
+<div class="warning-box">
+    <p>No es obligatorio realizar ajustes. Este proceso puede ser omitido.</p>
+</div>
+
+<div class="form-group">
+    <label for="property-select">Selecciona la propiedad</label>
+    <select id="property-select" class="custom-select" onchange="renderAdjustments(this.selectedIndex)">
+        <!-- Dinamically insert options with JS-->
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="adjustment-name">Concepto</label>
+    <input type="text" id="adjustment-name" placeholder="Ej: Mantenimiento, Descuento por pronto pago">
+</div>
+
+<div class="form-group">
+    <label for="adjustment-amount">Valor</label>
+    <input type="number" id="adjustment-amount" placeholder="$0.00">
+</div>
+
+<div class="form-group">
+    <label>Tipo</label>
+    <div id="adjustment-radiobuttons" class="radio-group">
+        <label><input type="radio" name="adjustment-type" id="extra_charge"> Cargo adicional</label>
+        <label><input type="radio" name="adjustment-type" id="discount"> Descuento</label>
+    </div>
+</div>
+
+<div class="form-group">
+    <button class="button" id="add-adjustment-btn" onclick="manager.addAdjustment()">Agregar ajuste</button>
+</div>
+
+<div class="table-wrapper">
+    <table class="fixed-table" id="adjustments-table">
+        <thead>
+            <tr>
+                <th class="hidden" id="adjustmentTablePropertyName">Propiedad</th>
+                <th>Concepto</th>
+                <th>Valor</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="empty-row" id="no-adjustments-row">
+                <td colspan="3">No se han registrado ajustes para esta propiedad.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="btn-actions">
+    <button class="button" onclick="prevStep()">Atrás</button>
+    <button class="button" onclick="manager.liquidate()">Siguiente</button>
+</div>

@@ -80,10 +80,6 @@ header {
     background-color: var(--bg-form);
     border-radius: var(--radius-large);
     box-shadow: var(--box-shadow-form);
-    display: none;
-}
-
-.form-section.active {
     display: block;
 }
 
