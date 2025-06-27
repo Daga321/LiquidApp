@@ -1,29 +1,36 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
-    <link href="./src/css/Variables.css" rel="stylesheet">
-    <link href="./src/css/Style.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LiquidApp</title>
-  </head>
-  <body>
-    <header>
-        <h1>Liquidación de Servicios Compartidos</h1>
-    </header>
 
-    <!-- Stepper-->
-    <div class="stepper">
-        <div class="step active" data-step="0" data-step-num="1">1. Datos generales</div>
-        <div class="step" data-step="1" data-step-num="2">2. Propiedades</div>
-        <div class="step" data-step="2" data-step-num="3">3. Extras</div>
-        <div class="step" data-step="3" data-step-num="4">4. Resultado</div>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+  <link href="./src/css/Variables.css" rel="stylesheet">
+  <link href="./src/css/Style.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LiquidApp</title>
+</head>
+
+<body>
+  <header>
+    <h1>Liquidación de Servicios Compartidos</h1>
+  </header>
+
+  <!-- Stepper-->
+  <div class="stepper">
+    <div class="step active" data-step="0" data-step-num="1">1. Datos generales</div>
+    <div class="step" data-step="1" data-step-num="2">2. Propiedades</div>
+    <div class="step" data-step="2" data-step-num="3">3. Extras</div>
+    <div class="step" data-step="3" data-step-num="4">4. Resultado</div>
+  </div>
+
+  <div class="form-section" id="app">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <span>Cargando...</span>
     </div>
+  </div>
+</body>
+<script type="module" src="/src/main.js"></script>
 
-    <div class="form-section" id="app"></div>
-  </body>
-  <script type="module" src="/src/main.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </html>

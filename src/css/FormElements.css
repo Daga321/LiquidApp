@@ -9,6 +9,24 @@
     transition: all 0.3s ease;
 }
 
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border-main);
+    border-radius: var(--radius-small);
+    font-size: 1rem;
+}
+
+input[type="date"] {
+    background-color: var(--bg-form);
+    appearance: none;
+    -webkit-appearance: none;
+    color: var(--text-main);
+}
+
 input[type="radio"] {
     appearance: none;
     -webkit-appearance: none;
@@ -40,13 +58,72 @@ input[type="radio"]:checked::before {
     transform: scale(1);
 }
 
+input:invalid,
+select:invalid {
+    border-color: var(--color-danger);
+}
+
 button.button:disabled {
     background-color: var(--gray-medium);
     cursor: not-allowed;
 }
 
+.button {
+    background-color: var(--color-secondary);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-small);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
 @media (max-width: 600px) {
     .radio-group {
         flex-direction: column;
+    }
+}
+
+.hidden {
+    display: none !important;
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.fade-in {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: scale(0.95);
+    animation: fadeInAnim 0.2s ease-out forwards;
+}
+
+@keyframes fadeInAnim {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.fade-out {
+    animation: fadeOutAnim 0.2s ease-out forwards;
+}
+
+@keyframes fadeOutAnim {
+    to {
+        opacity: 0;
+        transform: scale(0.95);
     }
 }
