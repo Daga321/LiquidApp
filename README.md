@@ -1,26 +1,21 @@
+# LiquidApp
+
+[🇪🇸 Leer en español](README.es.md)
+
+<div style="text-align: center;">
+  <img src="./Assets/access the app.png" alt="Access the App" width="500px"/>
+</div>
+
 # LiquidApp - Utility Bill Splitter for Multi-Unit Properties
 
 ![HTML](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
+![NaviGo](https://img.shields.io/badge/NaviGo-007ACC?logo=data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDA3QUNDIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0wIDE4Yy00LjQxIDAtOC0zLjU5LTgtOHMzLjU5LTggOC04IDggMy41OSA4IDgtMy41OSA4LTggOHoiLz48L3N2Zz4=)
 ![html2canvas](https://img.shields.io/badge/html2canvas-0.5.0-blue)
 
 ---
-<a href="https://daga321.github.io/LiquidApp/" target="_blank" style="
-  display: block;
-  width: 100%;
-  padding: 16px 0;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  color: white;
-  background: linear-gradient(90deg, #B39DDB, #C8E6C9);
-  border-radius: 10px;
-  text-decoration: none;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-">
-  🚀 Access the App
-</a>
 
 ## About the Project
 
@@ -51,18 +46,8 @@ You are free to share and adapt the work for non-commercial purposes, as long as
 
 ---
 
-<a href="https://daga321.github.io/LiquidApp/" target="_blank" style="
-  display: block;
-  width: 100%;
-  padding: 16px 0;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  color: white;
-  background: linear-gradient(90deg, #B39DDB, #C8E6C9);
-  border-radius: 10px;
-  text-decoration: none;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-">
-  🚀 Access the App
-</a>
+<div style="text-align: center;">
+  <img src="./Assets/access the app.png" alt="Access the App" width="500px"/>
+</div>
+
+[🇪🇸 Leer en español](README.es.md)
