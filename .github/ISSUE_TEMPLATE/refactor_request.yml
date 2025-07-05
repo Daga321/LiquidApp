@@ -1,6 +1,6 @@
 name: "🔧 Refactor / Optimization"
 description: Suggest refactoring or performance improvements to the codebase.
-title: "[Refactor] - <short description> "
+title: "🔧 [Refactor] - <short description> "
 labels: ["refactor"]
 assignees: []
 body:
