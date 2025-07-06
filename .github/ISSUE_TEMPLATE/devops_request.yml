@@ -1,6 +1,6 @@
 name: "🛠️ DevOps / CI"
 description: Report or request changes in CI/CD pipelines, GitHub Actions, or automation scripts.
-title: "[CI/CD] - <short description> "
+title: "🛠️ [CI/CD] - <short description> "
 labels: ["ci", "devops"]
 assignees: []
 body:
