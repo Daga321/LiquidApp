@@ -1,3 +1,5 @@
+import './LoadingSpinner.css'; // Import the loading spinner styles
+
 /**
  * LoadingSpinner Component
  * Renders a loading spinner with message

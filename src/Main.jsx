@@ -22,4 +22,12 @@ import './css/FormElements.css';
 // import './js/TableAnimation.js'
 // import './js/Validation.js'
 
-import './Router.js';
+// import './Router.js';
+
+
+import ReactDOM from 'react-dom/client';
+import { App } from './App.jsx';
+
+// Mount the app to the root element
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);

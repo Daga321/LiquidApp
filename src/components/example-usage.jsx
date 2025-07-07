@@ -6,12 +6,12 @@
 // Import components
 import { Header } from './components/Header/Header.js';
 import { LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner.js';
-import { GeneralDataForm } from './components/GeneralDataForm/GeneralDataForm.js';
-import { PropertiesForm } from './components/PropertiesForm/PropertiesForm.js';
-import { AdjustmentForm } from './components/AdjustmentForm/AdjustmentForm.js';
-import { Results } from './components/Results/Results.js';
+import { GeneralDataForm } from './components/GeneralDataForm/GeneralDataForm.jsx';
+import { PropertiesForm } from './components/PropertiesForm/PropertiesForm.jsx';
+import { AdjustmentForm } from './components/AdjustmentForm/AdjustmentForm.jsx';
+import { Results } from './components/Results/Results.jsx';
 import { Stepper } from './components/Steeper/Stepper.js';
-import { DinamicTable } from './components/DinamicTable/DinamicTable.js';
+import { DinamicTable } from './components/DinamicTable/DinamicTable.jsx';
 
 // Usage examples:
 

@@ -1,3 +1,5 @@
+import './Header.css'; // Import the header styles
+
 /**
  * Header Component
  * Renders the main header of the application
