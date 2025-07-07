@@ -2,10 +2,10 @@
 // import './css/Style.css'
 // import './css/Variables.css'
 
-import './css/TableAnimations.css'
-import './css/Toast.css'
-import './css/Table.css';
-import './css/Adjustments.css';
+import './components/DinamicTable/TableAnimations.css'
+import './components/Results/Toast.css'
+import './components/DinamicTable/Table.css';
+import './components/AdjustmentForm/Adjustments.css';
 import './css/FormElements.css';
 
 
