@@ -4,51 +4,51 @@
  */
 
 // Import components
-import { Header } from './components/Header/Header.js';
-import { LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner.js';
-import { GeneralDataForm } from './components/GeneralDataForm/GeneralDataForm.jsx';
-import { PropertiesForm } from './components/PropertiesForm/PropertiesForm.jsx';
-import { AdjustmentForm } from './components/AdjustmentForm/AdjustmentForm.jsx';
-import { Results } from './components/Results/Results.jsx';
-import { Stepper } from './components/Steeper/Stepper.js';
-import { DinamicTable } from './components/DinamicTable/DinamicTable.jsx';
+import { Header } from './Header/Header.jsx';
+import { LoadingSpinner } from './LoadingSpinner/LoadingSpinner.jsx';
+import { GeneralDataForm } from './GeneralDataForm/GeneralDataForm.jsx';
+import { PropertiesForm } from './PropertiesForm/PropertiesForm.jsx';
+import { AdjustmentForm } from './AdjustmentForm/AdjustmentForm.jsx';
+import { Results } from './Results/Results.jsx';
+import { Stepper } from './Steeper/Stepper.jsx';
+import { DinamicTable } from './DinamicTable/DinamicTable.jsx';
 
 // Usage examples:
 
 // 1. Header component
-function renderHeader() {
+export function RenderHeader() {
     return <Header />;
 }
 
 // 2. Loading spinner with custom message
-function renderLoadingSpinner(message) {
+export function RenderLoadingSpinner(message) {
     return <LoadingSpinner message={message} />;
 }
 
 // 3. Forms
-function renderGeneralDataForm() {
+export function RenderGeneralDataForm() {
     return <GeneralDataForm />;
 }
 
-function renderPropertiesForm() {
+export function RenderPropertiesForm() {
     return <PropertiesForm />;
 }
 
-function renderAdjustmentForm() {
+export function RenderAdjustmentForm() {
     return <AdjustmentForm />;
 }
 
-function renderResults() {
+export function RenderResults() {
     return <Results />;
 }
 
 // 4. Stepper navigation
-function renderStepper() {
+export function RenderStepper() {
     return <Stepper />;
 }
 
 // 5. Dynamic table with data
-function renderDynamicTable() {
+export function RenderDynamicTable() {
     const tableData = {
         headers: ['Nombre', 'Valor', 'Acciones'],
         rows: [
@@ -58,11 +58,11 @@ function renderDynamicTable() {
         tableId: 'example-table'
     };
     
-    return <DinamicTable {...tableData} />;
+    return (<DinamicTable {...tableData} />);
 }
 
 // 6. Complete app structure
-function App() {
+export function RenderApp() {
     return (
         <div className="app">
             <Header />
@@ -74,5 +74,3 @@ function App() {
         </div>
     );
 }
-
-export default App;

@@ -1,3 +1,5 @@
+import './Toast.css';
+
 /**
  * Results Component
  * Renders the results table and liquidation information

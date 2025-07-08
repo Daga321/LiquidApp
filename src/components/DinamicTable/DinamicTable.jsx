@@ -63,34 +63,3 @@ export function updateTableData(tableId, newData) {
         tbody.appendChild(emptyRow);
     }
 }
-
-/**
- * Update table data dynamically
- */
-export function updateTableData(tableId, newData) {
-    const table = document.getElementById(tableId);
-    if (!table) return;
-    
-    const tbody = table.querySelector('tbody');
-    tbody.innerHTML = '';
-    
-    if (newData.length > 0) {
-        newData.forEach(row => {
-            const tr = document.createElement('tr');
-            row.forEach(cell => {
-                const td = document.createElement('td');
-                td.textContent = cell;
-                tr.appendChild(td);
-            });
-            tbody.appendChild(tr);
-        });
-    } else {
-        const emptyRow = document.createElement('tr');
-        emptyRow.className = 'empty-row';
-        const emptyCell = document.createElement('td');
-        emptyCell.colSpan = table.querySelector('thead tr').children.length;
-        emptyCell.textContent = 'No hay datos disponibles';
-        emptyRow.appendChild(emptyCell);
-        tbody.appendChild(emptyRow);
-    }
-}

@@ -1,3 +1,5 @@
+import './Adjustments.css';
+
 /**
  * AdjustmentForm Component
  * Renders the form for adjustments input

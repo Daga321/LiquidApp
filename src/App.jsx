@@ -2,6 +2,10 @@ import { Header } from './components/Header/Header.jsx';
 import { Stepper } from './components/Steeper/Stepper.jsx';
 import { LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner.jsx';
 
+import { RenderDynamicTable } from './components/example-usage.jsx';
+
+
+
 // Create the main App component
 export function App() {
     return (
