@@ -38,3 +38,14 @@ label {
     margin-top: 4px;
 }
 
+.screenshot-wrapper {
+    position: fixed;
+    top: -9999px;
+    left: 0;
+    width: fit-content;
+    padding: 25px;
+    background: var(--bg-main);
+    display: inline-block;
+    box-sizing: border-box;
+}
+

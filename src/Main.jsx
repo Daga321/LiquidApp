@@ -7,7 +7,7 @@ import './components/DinamicTable/Table.css';
 
 import ReactDOM from 'react-dom/client';
 import { App } from './App.jsx';
-import { StateProvider } from "./utils/StateContext.jsx";
+import { StateProvider } from "./Utils/StateContext.jsx";
 
 // Mount the app to the root element
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -16,3 +16,14 @@ root.render(
     <App />
   </StateProvider>
 );
+
+export function nextStep(){
+
+}
+
+export function validate(data) {
+    return true;
+}
+
+export function prevStep() {
+}

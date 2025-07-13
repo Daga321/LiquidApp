@@ -44,13 +44,6 @@ export function PropertiesForm() {
                     </tbody>
                 </table>
             </div>
-
-            <div className="btn-actions">
-                <button className="button" onClick="prevStep()">Atrás</button>
-                <button className="button" id="PropertiesForm-NextButton" onClick="manager.setPropertiesFormValue()">
-                    Siguiente
-                </button>
-            </div>
         </>
     );
 }

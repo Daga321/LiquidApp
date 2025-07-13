@@ -63,12 +63,6 @@ export function GeneralDataForm() {
                 <label htmlFor="service-amount">Costo por unidad</label>
                 <input type="number" min="1" id="service-amount" placeholder="$0.000" />
             </div>
-
-            <div className="btn-actions">
-                <button className="button" id="GeneralData-NextButton" onClick="manager.setGeneralDataValue()">
-                    Siguiente
-                </button>
-            </div>
         </>
     );
 }

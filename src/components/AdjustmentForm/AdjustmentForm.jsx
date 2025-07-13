@@ -65,11 +65,6 @@ export function AdjustmentForm() {
                     </tbody>
                 </table>
             </div>
-
-            <div className="btn-actions">
-                <button className="button" onClick="prevStep()">Atrás</button>
-                <button className="button" onClick="manager.liquidate()">Siguiente</button>
-            </div>
         </>
     );
 }

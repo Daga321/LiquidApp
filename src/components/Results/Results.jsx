@@ -1,10 +1,9 @@
-import './Toast.css';
 
 /**
  * Results Component
  * Renders the results table and liquidation information
  */
-export function Results() {
+export function ResultsView() {
     return (
         <>
             <h2 id="service-name-information" className="section-title"></h2>
@@ -51,11 +50,6 @@ export function Results() {
                         {/* Dinamically shows properties inforamtion */}
                     </tbody>
                 </table>
-            </div>
-
-            <div className="btn-actions">
-                <button className="button" onClick="prevStep()">Atrás</button>
-                <button className="button" onClick="shareResults()">Copiar para enviar</button>
             </div>
         </>
     );
