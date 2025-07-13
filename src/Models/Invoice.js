@@ -6,13 +6,21 @@ class Invoice {
      * @param {string} serviceName - The name of the service being billed.
      * @param {number} billValue - The total value of the bill.
      * @param {number} valuePerPeople - The value per person for the service.
-     * @param {number} servicesAmount - The value per unit of the services consumed.
+     * @param {string} unit - The unit of measurement for the service.
+     * @param {Date} periodStart - The start date of the billing period.
+     * @param {Date} periodEnd - The end date of the billing period.
+     * @param {Date} dueDate - The due date for payment.
+     * @param {number} unitCost - The cost per unit of the service.
      */
-    constructor(serviceName, billValue, valuePerPeople, servicesAmount) {
+    constructor(serviceName, billValue, valuePerPeople, unit, periodStart, periodEnd, dueDate, unitCost) {
         this._serviceName = serviceName;
         this._billValue = billValue;
         this._valuePerPeople = valuePerPeople;
-        this._servicesAmount = servicesAmount;
+        this._unit = unit;
+        this._periodStart = periodStart;
+        this._periodEnd = periodEnd;
+        this._dueDate = dueDate;
+        this._unitCost = unitCost;
     }
 
     /**
@@ -64,19 +72,83 @@ class Invoice {
     }
 
     /**
-     * Get the services amount.
-     * @returns {number} The total amount of services consumed.
+     * Get the unit of measurement.
+     * @returns {string} The unit of measurement for the service.
      */
-    get servicesAmount() {
-        return this._servicesAmount;
+    get unit() {
+        return this._unit;
     }
 
     /**
-     * Set the services amount.
-     * @param {number} value - The total amount of services consumed.
+     * Set the unit of measurement.
+     * @param {string} value - The unit of measurement for the service.
      */
-    set servicesAmount(value) {
-        this._servicesAmount = value;
+    set unit(value) {
+        this._unit = value;
+    }
+
+    /**
+     * Get the period start date.
+     * @returns {Date} The start date of the billing period.
+     */
+    get periodStart() {
+        return this._periodStart;
+    }
+
+    /**
+     * Set the period start date.
+     * @param {Date} value - The start date of the billing period.
+     */
+    set periodStart(value) {
+        this._periodStart = value;
+    }
+
+    /**
+     * Get the period end date.
+     * @returns {Date} The end date of the billing period.
+     */
+    get periodEnd() {
+        return this._periodEnd;
+    }
+
+    /**
+     * Set the period end date.
+     * @param {Date} value - The end date of the billing period.
+     */
+    set periodEnd(value) {
+        this._periodEnd = value;
+    }
+
+    /**
+     * Get the due date.
+     * @returns {Date} The due date for payment.
+     */
+    get dueDate() {
+        return this._dueDate;
+    }
+
+    /**
+     * Set the due date.
+     * @param {Date} value - The due date for payment.
+     */
+    set dueDate(value) {
+        this._dueDate = value;
+    }
+
+    /**
+     * Get the unit cost.
+     * @returns {number} The cost per unit of the service.
+     */
+    get unitCost() {
+        return this._unitCost;
+    }
+
+    /**
+     * Set the unit cost.
+     * @param {number} value - The cost per unit of the service.
+     */
+    set unitCost(value) {
+        this._unitCost = value;
     }
 }
 

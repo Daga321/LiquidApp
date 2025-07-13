@@ -3,9 +3,9 @@ import { Stepper } from './components/Steeper/Stepper.jsx';
 import { LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner.jsx';
 
 import { GeneralData } from './containers/GeneralData/GeneralData.jsx'
-import { Properties } from './containers/Properties/Properties.jsx'
-import { Adjustment } from './containers/Adjustment/Adjustment.jsx'
-import { Results } from './containers/Results/Results.jsx';
+// import { Properties } from './containers/Properties/Properties.jsx'
+// import { Adjustment } from './containers/Adjustment/Adjustment.jsx'
+// import { Results } from './containers/Results/Results.jsx';
 
 // Create the main App component
 export function App() {
@@ -16,12 +16,12 @@ export function App() {
             <div className="form-section" id="app">
                 <LoadingSpinner />
                 <GeneralData />
-                <LoadingSpinner />
-                <Properties />
+                {/* <LoadingSpinner />
+                <Properties /> 
                 <LoadingSpinner />
                 <Adjustment />
                 <LoadingSpinner />
-                <Results />
+                <Results />  */}
             </div>
         </div>
     );

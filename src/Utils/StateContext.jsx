@@ -9,27 +9,31 @@ export const StateProvider = ({ children }) => {
             serviceName: "",
             billValue: 0,
             valuePerPeople: 0,
-            servicesAmount: 0
+            unit: "",
+            periodStart: "",
+            periodEnd: "",
+            dueDate: "",
+            unitCost: 0
         },
         // Properties list
         properties: [
-            {
-                id: 1,
-                name: "",
-                method: null, // Will be one of LiquidationMethodEnum values
-                baseValue: 0,
-                amountToPay: 0,
-                adjustmentValue: 0,
-                totalToPay: 0,
-                adjustmentsList: [
-                    // Each adjustment will have:
-                    // {
-                    //   note: "",
-                    //   value: 0,
-                    //   type: null // Will be AdjustmentTypeEnum.DISCOUNT or AdjustmentTypeEnum.EXTRA_CHARGE
-                    // }
-                ]
-            }
+            // {
+            //     id: 1,
+            //     name: "",
+            //     method: null, // Will be one of LiquidationMethodEnum values
+            //     baseValue: 0,
+            //     amountToPay: 0,
+            //     adjustmentValue: 0,
+            //     totalToPay: 0,
+            //     adjustmentsList: [
+            //         // Each adjustment will have:
+            //         // {
+            //         //   note: "",
+            //         //   value: 0,
+            //         //   type: null // Will be AdjustmentTypeEnum.DISCOUNT or AdjustmentTypeEnum.EXTRA_CHARGE
+            //         // }
+            //     ]
+            // }
         ],
         // Current step in the stepper
         currentStep: 0,
