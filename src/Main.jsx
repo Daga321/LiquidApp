@@ -5,6 +5,8 @@
 import './components/DinamicTable/TableAnimations.css'
 import './components/DinamicTable/Table.css';
 
+import { StrictMode } from 'react';
+
 import ReactDOM from 'react-dom/client';
 import { App } from './App.jsx';
 import { StateProvider } from "./Utils/StateContext.jsx";
@@ -12,9 +14,11 @@ import { StateProvider } from "./Utils/StateContext.jsx";
 // Mount the app to the root element
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <StateProvider>
-    <App />
-  </StateProvider>
+  <StrictMode>
+    <StateProvider>
+      <App />
+    </StateProvider>
+  </StrictMode>
 );
 
 export function nextStep(){
