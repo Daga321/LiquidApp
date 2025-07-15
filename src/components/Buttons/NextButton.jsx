@@ -1,19 +1,15 @@
 import { nextStep } from "../../App";
 
-export function NextButton({ fuction, disabled = false }) {
+export function NextButton({ disabled = false }) {
     const handleClick = () => {
         if (disabled) return;
-        
-        if (fuction && typeof fuction === 'function') {
-            fuction();
-        } else {
-            nextStep();
-        }
+        nextStep();
+        console.log("Form is valid, proceeding to next step");
     };
 
     return (
         <button
-            className={`button ${disabled ? 'disabled' : ''}`}
+            className='button'
             disabled={disabled}
             onClick={handleClick}
         >

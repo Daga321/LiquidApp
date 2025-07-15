@@ -9,7 +9,8 @@ import { GeneralData } from './containers/GeneralData/GeneralData.jsx'
 // import { Adjustment } from './containers/Adjustment/Adjustment.jsx'
 // import { Results } from './containers/Results/Results.jsx';
 
-let currentStep = 0; 
+// Module variable to handle current step and setter for external access
+let currentStepRef = { value: 0, setter: null }; 
 
 const views = {
     "Datos generales": <GeneralData />,
@@ -18,7 +19,7 @@ const views = {
     // "Resultados": <Results />
 }
 
-function getView() {
+function getView(currentStep) {
     const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
@@ -30,7 +31,7 @@ function getView() {
         return <LoadingSpinner />;
     }
 
-    if (currentStep > views.length - 1 || currentStep < 0) {
+    if (currentStep > Object.keys(views).length - 1 || currentStep < 0) {
         return (
             <div className="invalid-step-message">
             Etapa no válida. Por favor, selecciona una etapa correcta.
@@ -44,28 +45,37 @@ function getView() {
 // Create the main App component
 export function App() {
     const { data } = useStateContext();
+    const [currentStep, setCurrentStep] = React.useState(0);
+    
+    // Update module reference when component mounts or state changes
+    React.useEffect(() => {
+        currentStepRef.value = currentStep;
+        currentStepRef.setter = setCurrentStep;
+    }, [currentStep]);
+    
     return (
         <div >
             <Header />
             <Stepper step={currentStep} views={Object.keys(views)} />
             <div className="form-section" id="app">
-                {getView()}
+                {getView(currentStep)}
             </div>
         </div>
     );
 }
 
 export function nextStep(){
-    currentStep++;
-    if (currentStep > views.length - 1) {
-        currentStep = 0;
+    if (currentStepRef.setter) {
+        const newStep = currentStepRef.value + 1;
+        const maxStep = Object.keys(views).length - 1;
+        currentStepRef.setter(newStep > maxStep ? maxStep : newStep);
     }
 }
 
 export function prevStep() {
-    currentStep--;
-    if (currentStep < 0) {
-        currentStep = 0;
+    if (currentStepRef.setter) {
+        const newStep = currentStepRef.value - 1;
+        currentStepRef.setter(newStep < 0 ? 0 : newStep);
     }
 }
 

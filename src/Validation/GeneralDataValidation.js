@@ -12,30 +12,27 @@ export class GeneralDataValidation extends ValidationBase {
   /**
    * Validates all fields in the general data form
    * @param {Object} data - Invoice data object
-   * @param {Object} uiState - UI state for conditional validations
    * @returns {Object} Validation result
    */
-  validate(data, uiState = {}) {
+  validate(data) {
     this.clearErrors();
     let isValid = true;
 
-    // Validate service name if it's "Other"
-    if (uiState.serviceNameOption === "Otro") {
-      if (!this.validateRequired(data.serviceName, 'serviceName', 'Enter the service name')) {
-        isValid = false;
-      }
+    // Validate service selection - first check if any service was selected
+    if (!this.validateServiceSelection(data)) {
+      isValid = false;
     }
 
     // Required date validations
-    if (!this.validateRequired(data.periodStart, 'periodStart', 'Enter the period start date')) {
+    if (!this.validateRequired(data.periodStart, 'periodStart', 'Ingrese la fecha de inicio del período')) {
       isValid = false;
     }
 
-    if (!this.validateRequired(data.periodEnd, 'periodEnd', 'Enter the period end date')) {
+    if (!this.validateRequired(data.periodEnd, 'periodEnd', 'Ingrese la fecha de fin del período')) {
       isValid = false;
     }
 
-    if (!this.validateRequired(data.dueDate, 'dueDate', 'Select the payment due date')) {
+    if (!this.validateRequired(data.dueDate, 'dueDate', 'Seleccione la fecha límite de pago')) {
       isValid = false;
     }
 
@@ -45,18 +42,18 @@ export class GeneralDataValidation extends ValidationBase {
     }
 
     // Conditional validations based on meter type
-    if (uiState.meterType === 'single') {
+    if (data.singleMeter) {
       // Single meter - validate bill value
-      if (!this.validateMinNumber(data.billValue, 'billValue', 1, 'Must be a number greater than or equal to 1')) {
+      if (!this.validateMinNumber(data.billValue, 'billValue', 1, 'Debe ser un número mayor o igual a 1')) {
         isValid = false;
       }
-    } else if (uiState.meterType === 'multiple') {
+    } else {
       // Multiple meter - validate unit and unit cost
-      if (!this.validateRequired(data.unit, 'unit', 'Specify the billing unit')) {
+      if (!this.validateRequired(data.unit, 'unit', 'Especifique la unidad de facturación')) {
         isValid = false;
       }
 
-      if (!this.validateMinNumber(data.unitCost, 'unitCost', 1, 'Must be a number greater than or equal to 1')) {
+      if (!this.validateMinNumber(data.unitCost, 'unitCost', 1, 'Debe ser un número mayor o igual a 1')) {
         isValid = false;
       }
     }
@@ -76,25 +73,26 @@ export class GeneralDataValidation extends ValidationBase {
 
     // Start date cannot be in the future
     if (data.periodStart) {
-      if (!this.validateDateNotFuture(data.periodStart, 'periodStart', 'Date cannot be in the future')) {
+      if (!this.validateDateNotFuture(data.periodStart, 'periodStart', 'La fecha no puede ser en el futuro')) {
         isValid = false;
       }
     }
 
     // End date must be after start and before today
     if (data.periodEnd) {
-      if (data.periodStart && !this.validateDateAfter(data.periodEnd, data.periodStart, 'periodEnd', 'Must be after the period start')) {
+      const tomorrowDate = new Date();
+      tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+      const tomorrow = tomorrowDate.toISOString().split('T')[0];
+      if (data.periodStart && !this.validateDateAfter(data.periodEnd, data.periodStart, 'periodEnd', 'Debe ser posterior al inicio del período')) {
         isValid = false;
-      }
-
-      if (!this.validateDateBefore(data.periodEnd, today, 'periodEnd', 'Must be before today')) {
+      } else if (!this.validateDateBefore(data.periodEnd, tomorrow, 'periodEnd', 'No puede ser posterior a hoy')) {
         isValid = false;
       }
     }
 
     // Due date must be after period end
     if (data.dueDate && data.periodEnd) {
-      if (!this.validateDateAfter(data.dueDate, data.periodEnd, 'dueDate', 'Must be after the period end')) {
+      if (!this.validateDateAfter(data.dueDate, data.periodEnd, 'dueDate', 'Debe ser posterior al fin del período')) {
         isValid = false;
       }
     }
@@ -105,15 +103,20 @@ export class GeneralDataValidation extends ValidationBase {
   /**
    * Validates only the service name (for real-time use)
    * @param {string} serviceName - Service name
-   * @param {string} serviceNameOption - Selected option
+   * @param {string} serviceOption - Selected service option
    * @returns {Object}
    */
-  validateServiceName(serviceName, serviceNameOption) {
+  validateServiceName(serviceName, serviceOption) {
     this.clearErrors();
     let isValid = true;
 
-    if (serviceNameOption === "Otro") {
-      if (!this.validateRequired(serviceName, 'serviceName', 'Enter the service name')) {
+    // First validate that a service option is selected
+    if (!serviceOption || serviceOption === "") {
+      this.addError('serviceOption', 'Por favor seleccione un servicio del menú desplegable');
+      isValid = false;
+    } else if (serviceOption === "Otro") {
+      // If "Other" is selected, validate the custom service name
+      if (!this.validateRequired(serviceName, 'serviceName', 'Ingrese el nombre del servicio')) {
         isValid = false;
       }
     }
@@ -131,15 +134,15 @@ export class GeneralDataValidation extends ValidationBase {
     this.clearErrors();
     let isValid = true;
 
-    if (!this.validateRequired(dates.periodStart, 'periodStart', 'Enter the period start date')) {
+    if (!this.validateRequired(dates.periodStart, 'periodStart', 'Ingrese la fecha de inicio del período')) {
       isValid = false;
     }
 
-    if (!this.validateRequired(dates.periodEnd, 'periodEnd', 'Enter the period end date')) {
+    if (!this.validateRequired(dates.periodEnd, 'periodEnd', 'Ingrese la fecha de fin del período')) {
       isValid = false;
     }
 
-    if (!this.validateRequired(dates.dueDate, 'dueDate', 'Select the payment due date')) {
+    if (!this.validateRequired(dates.dueDate, 'dueDate', 'Seleccione la fecha límite de pago')) {
       isValid = false;
     }
 
@@ -162,20 +165,42 @@ export class GeneralDataValidation extends ValidationBase {
     let isValid = true;
 
     if (meterType === 'single') {
-      if (!this.validateMinNumber(data.billValue, 'billValue', 1, 'Must be a number greater than or equal to 1')) {
+      if (!this.validateMinNumber(data.billValue, 'billValue', 1, 'Debe ser un número mayor o igual a 1')) {
         isValid = false;
       }
     } else if (meterType === 'multiple') {
-      if (!this.validateRequired(data.unit, 'unit', 'Specify the billing unit')) {
+      if (!this.validateRequired(data.unit, 'unit', 'Especifique la unidad de facturación')) {
         isValid = false;
       }
 
-      if (!this.validateMinNumber(data.unitCost, 'unitCost', 1, 'Must be a number greater than or equal to 1')) {
+      if (!this.validateMinNumber(data.unitCost, 'unitCost', 1, 'Debe ser un número mayor o igual a 1')) {
         isValid = false;
       }
     }
 
     this.setValidState(isValid);
     return this.getValidationResult();
+  }
+
+  /**
+   * Validates service selection from dropdown and custom input if needed
+   * @param {Object} data - Invoice data object
+   * @returns {boolean}
+   */
+  validateServiceSelection(data) {
+    // Check if a service option has been selected (not the default empty option)
+    if (!data.serviceOption || data.serviceOption === "") {
+      this.addError('serviceOption', 'Por favor seleccione un servicio del menú desplegable');
+      return false;
+    }
+
+    // If "Otro" (Other) is selected, validate the custom service name
+    if (data.serviceOption === "Otro") {
+      if (!this.validateRequired(data.serviceName, 'serviceName', 'Ingrese el nombre del servicio')) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }

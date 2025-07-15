@@ -13,7 +13,8 @@ export const StateProvider = ({ children }) => {
             periodStart: "",
             periodEnd: "",
             dueDate: "",
-            unitCost: 0
+            unitCost: 0,
+            singleMeter: true
         },
         // Properties list
         properties: [
@@ -34,9 +35,7 @@ export const StateProvider = ({ children }) => {
             //         // }
             //     ]
             // }
-        ],
-        // Current step in the stepper
-        currentStep: 0,
+        ]
     });
 
     const handleChange = (e) => {

@@ -11,8 +11,9 @@ class Invoice {
      * @param {Date} periodEnd - The end date of the billing period.
      * @param {Date} dueDate - The due date for payment.
      * @param {number} unitCost - The cost per unit of the service.
+     * @param {boolean} singleMeter - Whether the service uses a single meter.
      */
-    constructor(serviceName, billValue, valuePerPeople, unit, periodStart, periodEnd, dueDate, unitCost) {
+    constructor(serviceName, billValue, valuePerPeople, unit, periodStart, periodEnd, dueDate, unitCost, singleMeter) {
         this._serviceName = serviceName;
         this._billValue = billValue;
         this._valuePerPeople = valuePerPeople;
@@ -21,6 +22,7 @@ class Invoice {
         this._periodEnd = periodEnd;
         this._dueDate = dueDate;
         this._unitCost = unitCost;
+        this._singleMeter = singleMeter;
     }
 
     /**
@@ -149,6 +151,22 @@ class Invoice {
      */
     set unitCost(value) {
         this._unitCost = value;
+    }
+
+    /**
+     * Get the single meter flag.
+     * @returns {boolean} Whether the service uses a single meter.
+     */
+    get singleMeter() {
+        return this._singleMeter;
+    }
+
+    /**
+     * Set the single meter flag.
+     * @param {boolean} value - Whether the service uses a single meter.
+     */
+    set singleMeter(value) {
+        this._singleMeter = value;
     }
 }
 
