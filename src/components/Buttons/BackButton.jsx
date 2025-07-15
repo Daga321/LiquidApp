@@ -1,4 +1,4 @@
-import { prevStep } from "../../Main";
+import { prevStep } from "../../App";
 
 export function BackButton() {
     return (

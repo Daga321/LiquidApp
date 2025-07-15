@@ -21,13 +21,7 @@ root.render(
   </StrictMode>
 );
 
-export function nextStep(){
-
-}
-
 export function validate(data) {
     return true;
 }
 
-export function prevStep() {
-}
