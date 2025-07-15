@@ -5,7 +5,7 @@ import { Stepper } from './components/Steeper/Stepper.jsx';
 import { LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner.jsx';
 
 import { GeneralData } from './containers/GeneralData/GeneralData.jsx'
-// import { Properties } from './containers/Properties/Properties.jsx'
+import { Properties } from './containers/Properties/Properties.jsx'
 // import { Adjustment } from './containers/Adjustment/Adjustment.jsx'
 // import { Results } from './containers/Results/Results.jsx';
 
@@ -14,7 +14,7 @@ let currentStepRef = { value: 0, setter: null };
 
 const views = {
     "Datos generales": <GeneralData />,
-    // "Propiedades": <Properties />,
+    "Propiedades": <Properties />,
     // "Ajustes": <Adjustment />,
     // "Resultados": <Results />
 }

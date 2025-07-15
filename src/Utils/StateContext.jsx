@@ -19,7 +19,6 @@ export const StateProvider = ({ children }) => {
         // Properties list
         properties: [
             // {
-            //     id: 1,
             //     name: "",
             //     method: null, // Will be one of LiquidationMethodEnum values
             //     baseValue: 0,
@@ -47,21 +46,22 @@ export const StateProvider = ({ children }) => {
     };
 
     // Helper functions for managing properties
-    const addProperty = () => {
+    const addProperty = (propertyData = null) => {
+        const newProperty = propertyData || {
+            name: "",
+            method: null,
+            baseValue: 0,
+            amountToPay: 0,
+            adjustmentValue: 0,
+            totalToPay: 0,
+            adjustmentsList: []
+        };
+
         setData((prev) => ({
             ...prev,
             properties: [
                 ...prev.properties,
-                {
-                    id: Date.now(), // Simple ID generation
-                    name: "",
-                    method: null,
-                    baseValue: 0,
-                    amountToPay: 0,
-                    adjustmentValue: 0,
-                    totalToPay: 0,
-                    adjustmentsList: []
-                }
+                newProperty
             ]
         }));
     };

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { MonetaryInput } from "../MonetaryInput/MonetaryInput.jsx";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage.jsx";
 
 /**
  * GeneralDataForm Component
@@ -47,11 +48,12 @@ export function GeneralDataForm({
         return new Date().toISOString().split('T')[0];
     };
 
-    // Helper function to get tomorrow's date in YYYY-MM-DD format
-    const getTomorrowDate = () => {
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        return tomorrow.toISOString().split('T')[0];
+    // Helper function to get the day before a given date
+    const getDayBefore = (dateString) => {
+        if (!dateString) return undefined;
+        const date = new Date(dateString);
+        date.setDate(date.getDate() - 1);
+        return date.toISOString().split('T')[0];
     };
 
     // Helper function to get the day after a given date
@@ -60,14 +62,6 @@ export function GeneralDataForm({
         const date = new Date(dateString);
         date.setDate(date.getDate() + 1);
         return date.toISOString().split('T')[0];
-    };
-
-    // Helper function to render error messages
-    const renderError = (fieldName) => {
-        if (errors[fieldName]) {
-            return <div className="error-message">{errors[fieldName]}</div>;
-        }
-        return null;
     };
 
     return (
@@ -85,7 +79,7 @@ export function GeneralDataForm({
                     <option value="Luz">Luz</option>
                     <option value="Otro">Otro</option>
                 </select>
-                {renderError('serviceOption')}
+                <ErrorMessage error={errors.serviceOption} />
             </div>
 
             {showCustomService && (
@@ -98,7 +92,7 @@ export function GeneralDataForm({
                         placeholder="Nombre del servicio"
                         className={errors.serviceName ? 'error' : ''}
                     />
-                    {renderError('serviceName')}
+                    <ErrorMessage error={errors.serviceName} />
                 </div>
             )}
 
@@ -109,10 +103,10 @@ export function GeneralDataForm({
                     id="period-start"
                     value={invoiceData.periodStart || ""}
                     onChange={(e) => onUpdateInvoice("periodStart", e.target.value)}
-                    max={getTodayDate()} // Cannot be in the future
+                    max={getDayBefore(getTodayDate())} // Cannot be in the future
                     className={errors.periodStart ? 'error' : ''}
                 />
-                {renderError('periodStart')}
+                <ErrorMessage error={errors.periodStart} />
             </div>
 
             <div className="form-group">
@@ -122,11 +116,11 @@ export function GeneralDataForm({
                     id="period-end"
                     value={invoiceData.periodEnd || ""}
                     onChange={(e) => onUpdateInvoice("periodEnd", e.target.value)}
-                    min={invoiceData.periodStart ? invoiceData.periodStart : undefined} // Must be after period start
+                    min={getDayAfter(invoiceData.periodStart)} // Must be after period start
                     max={getTodayDate()} // Cannot be after today
                     className={errors.periodEnd ? 'error' : ''}
                 />
-                {renderError('periodEnd')}
+                <ErrorMessage error={errors.periodEnd} />
             </div>
 
             <div className="form-group">
@@ -139,7 +133,7 @@ export function GeneralDataForm({
                     min={getDayAfter(invoiceData.periodEnd)} // Must be after period end
                     className={errors.dueDate ? 'error' : ''}
                 />
-                {renderError('dueDate')}
+                <ErrorMessage error={errors.dueDate} />
             </div>
 
             <div className="form-group">
@@ -178,7 +172,7 @@ export function GeneralDataForm({
                         placeholder="$0.00"
                         className={errors.billValue ? 'error' : ''}
                     />
-                    {renderError('billValue')}
+                    <ErrorMessage error={errors.billValue} />
                 </div>
             )}
 
@@ -194,7 +188,7 @@ export function GeneralDataForm({
                             onChange={(e) => onUpdateInvoice("unit", e.target.value)}
                             className={errors.unit ? 'error' : ''}
                         />
-                        {renderError('unit')}
+                        <ErrorMessage error={errors.unit} />
                     </div>
 
                     <div className="form-group">
@@ -206,7 +200,7 @@ export function GeneralDataForm({
                             placeholder="$0.000"
                             className={errors.unitCost ? 'error' : ''}
                         />
-                        {renderError('unitCost')}
+                        <ErrorMessage error={errors.unitCost} />
                     </div>
                 </>
             )}

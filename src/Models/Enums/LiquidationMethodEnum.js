@@ -1,20 +1,20 @@
 /**
  * Enum to define available liquidation methods.
  */
-class LiquidationMethodEnum {
-    static CONSUMPTION = {
+export const LiquidationMethodEnum = {
+    CONSUMPTION: {
         Key: "CONSUMPTION",
-        Method: "By consumption",
-        InputPlaceHolder: "Units consumed"
-    };
-    static PERCENTAGE = {
+        Method: "Por consumo",
+        InputPlaceHolder: "Unidades consumidas"
+    },
+    PERCENTAGE: {
         Key: "PERCENTAGE",
-        Method: "By percentage",
-        InputPlaceHolder: "Assigned percentage"
-    };
-    static PEOPLE = {
+        Method: "Por porcentaje",
+        InputPlaceHolder: "Porcentaje asignado"
+    },
+    PEOPLE: {
         Key: "PEOPLE",
-        Method: "By number of people",
-        InputPlaceHolder: "Number of people"
-    };
+        Method: "Por número de personas",
+        InputPlaceHolder: "Número de personas"
+    }
 }

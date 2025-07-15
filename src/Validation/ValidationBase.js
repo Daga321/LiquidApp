@@ -123,6 +123,26 @@ export class ValidationBase {
   }
 
   /**
+   * Validates that a numeric value is less than a maximum
+   * @param {number} value - Value to validate
+   * @param {string} field - Field name
+   * @param {number} max - Maximum value
+   * @param {string} message - Error message
+   * @returns {boolean}
+   */
+  validateMaxNumber(value, field, max, message) {
+    const numValue = parseFloat(value);
+    
+    if (isNaN(numValue) || numValue > max) {
+      this.addError(field, message);
+      return false;
+    }
+    
+    this.addError(field, '');
+    return true;
+  }
+
+  /**
    * Validates that a date is not in the future
    * @param {string} dateValue - Date in YYYY-MM-DD format
    * @param {string} field - Field name

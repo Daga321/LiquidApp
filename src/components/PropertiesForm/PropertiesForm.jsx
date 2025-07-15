@@ -1,48 +1,77 @@
+import { LiquidationMethodEnum } from "../../Models/Enums/LiquidationMethodEnum.js";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage.jsx";
+
 /**
  * PropertiesForm Component
- * Renders the form for properties input and table
+ * Renders the form for properties input
  */
-export function PropertiesForm() {
+export function PropertiesForm({ 
+    formData,
+    onFormDataChange,
+    onAddProperty,
+    errors = {},
+    canAddProperty = false
+}) {
+    const handleAddProperty = () => {
+        if (!canAddProperty) {
+            return;
+        }
+        onAddProperty();
+    };
+
     return (
         <>
-            <div className="form-group" id="property-name-group">
+            <div className="form-group">
                 <label htmlFor="property-name">Nombre del local/apartamento</label>
-                <input type="text" id="property-name" placeholder="Ej: Local 1, Apto 101" />
+                <input 
+                    type="text" 
+                    id="property-name" 
+                    placeholder="Ej: Local 1, Apto 101"
+                    value={formData.propertyName}
+                    onChange={(e) => onFormDataChange("propertyName", e.target.value)}
+                    className={errors.propertyName ? 'error' : ''}
+                />
+                <ErrorMessage error={errors.propertyName} />
             </div>
 
-            <div className="form-group" id="liquidation-method-group">
+            {formData.liquidationMethod !== LiquidationMethodEnum.CONSUMPTION.Key && (
+                <div className="form-group">
                 <label>Método de liquidación</label>
-                <div id="liquidation-method" className="radio-group">
+                <div className="radio-group">
                     <label>
-                        <input type="radio" name="method" id="percentage" /> 
-                        Porcentaje
+                        <input 
+                            type="radio" 
+                            name="method" 
+                            value={LiquidationMethodEnum.PERCENTAGE.Key}
+                            checked={formData.liquidationMethod === LiquidationMethodEnum.PERCENTAGE.Key}
+                            onChange={(e) => onFormDataChange("liquidationMethod", e.target.value)}
+                        /> 
+                        {LiquidationMethodEnum.PERCENTAGE.Method}
                     </label>
                     <label>
-                        <input type="radio" name="method" id="number-of-people" /> 
-                        Número de personas
+                        <input 
+                            type="radio" 
+                            name="method" 
+                            value={LiquidationMethodEnum.PEOPLE.Key}
+                            checked={formData.liquidationMethod === LiquidationMethodEnum.PEOPLE.Key}
+                            onChange={(e) => onFormDataChange("liquidationMethod", e.target.value)}
+                        /> 
+                        {LiquidationMethodEnum.PEOPLE.Method}
                     </label>
                 </div>
+                <ErrorMessage error={errors.liquidationMethod} />
             </div>
+            )}
 
             <div className="form-group">
-                <button className="button" id="AddPropertyButton" onClick="manager.addProperty()">
-                    Agregar
+                <button 
+                    className="button" 
+                    type="button" 
+                    onClick={handleAddProperty}
+                    disabled={!canAddProperty}
+                >
+                    Agregar Propiedad
                 </button>
-            </div>
-
-            <div className="table-wrapper">
-                <table className="fixed-table" id="properties-table">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Valor</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/* Dinamicly generated Rows */}
-                    </tbody>
-                </table>
             </div>
         </>
     );
