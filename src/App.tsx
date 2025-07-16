@@ -1,28 +1,37 @@
-import { useStateContext } from "./Utils/StateContext.jsx";
+import * as ReactModule from "react";
 
-import { Header } from './components/Header/Header.jsx';
-import { Stepper } from './components/Steeper/Stepper.jsx';
-import { LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner.jsx';
+import { Header } from './components/Header/Header';
+import { Stepper } from './components/Steeper/Stepper';
+import { LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner';
 
-import { GeneralData } from './containers/GeneralData/GeneralData.jsx'
-import { Properties } from './containers/Properties/Properties.jsx'
-// import { Adjustment } from './containers/Adjustment/Adjustment.jsx'
-// import { Results } from './containers/Results/Results.jsx';
+import { GeneralData } from './containers/GeneralData/GeneralData'
+import { Properties } from './containers/Properties/Properties'
+// import { Adjustment } from './containers/Adjustment/Adjustment'
+// import { Results } from './containers/Results/Results';
+
+// Type for the step setter function
+type StepSetter = ((value: number) => void) | null;
 
 // Module variable to handle current step and setter for external access
-let currentStepRef = { value: 0, setter: null }; 
+interface CurrentStepRef {
+    value: number;
+    setter: StepSetter;
+}
 
-const views = {
+let currentStepRef: CurrentStepRef = { value: 0, setter: null }; 
+
+// Define the views type
+const views: Record<string, any> = {
     "Datos generales": <GeneralData />,
     "Propiedades": <Properties />,
     // "Ajustes": <Adjustment />,
     // "Resultados": <Results />
 }
 
-function getView(currentStep) {
-    const [loading, setLoading] = React.useState(true);
+function getView(currentStep: number) {
+    const [loading, setLoading] = ReactModule.useState(true);
 
-    React.useEffect(() => {
+    ReactModule.useEffect(() => {
         const timer = setTimeout(() => setLoading(false), 2000);
         return () => clearTimeout(timer);
     }, []);
@@ -34,7 +43,7 @@ function getView(currentStep) {
     if (currentStep > Object.keys(views).length - 1 || currentStep < 0) {
         return (
             <div className="invalid-step-message">
-            Etapa no válida. Por favor, selecciona una etapa correcta.
+                Etapa no válida. Por favor, selecciona una etapa correcta.
             </div>
         );
     }
@@ -44,17 +53,16 @@ function getView(currentStep) {
 
 // Create the main App component
 export function App() {
-    const { data } = useStateContext();
-    const [currentStep, setCurrentStep] = React.useState(0);
+    const [currentStep, setCurrentStep] = ReactModule.useState(0);
     
     // Update module reference when component mounts or state changes
-    React.useEffect(() => {
+    ReactModule.useEffect(() => {
         currentStepRef.value = currentStep;
         currentStepRef.setter = setCurrentStep;
     }, [currentStep]);
     
     return (
-        <div >
+        <div>
             <Header />
             <Stepper step={currentStep} views={Object.keys(views)} />
             <div className="form-section" id="app">
@@ -64,7 +72,7 @@ export function App() {
     );
 }
 
-export function nextStep(){
+export function nextStep(): void {
     if (currentStepRef.setter) {
         const newStep = currentStepRef.value + 1;
         const maxStep = Object.keys(views).length - 1;
@@ -72,10 +80,9 @@ export function nextStep(){
     }
 }
 
-export function prevStep() {
+export function prevStep(): void {
     if (currentStepRef.setter) {
         const newStep = currentStepRef.value - 1;
         currentStepRef.setter(newStep < 0 ? 0 : newStep);
     }
 }
-
