@@ -1,5 +1,5 @@
+import React from "react";
 import html2canvas from "html2canvas";
-
 
 export function ShareButton() {
     return (
@@ -12,11 +12,12 @@ export function ShareButton() {
     );
 }
 
-
-async function shareResults() {
-    const section = document.querySelector('#sharable-results');
-    const clone = section.cloneNode(true);
-    const buttons = clone.querySelector('.btn-actions');
+async function shareResults(): Promise<void> {
+    const section = document.querySelector('#sharable-results') as HTMLElement;
+    if (!section) return;
+    
+    const clone = section.cloneNode(true) as HTMLElement;
+    const buttons = clone.querySelector('.btn-actions') as HTMLElement;
     if (buttons) buttons.remove();
 
     // Padding in all directions (top, right, bottom, left)
@@ -36,8 +37,8 @@ async function shareResults() {
     document.body.appendChild(wrapper);
 
     // Ensure content inside result tables overflows properly
-    clone.querySelectorAll(".resulTableWraper").forEach(wrapper => {
-        wrapper.style.overflow = "visible";
+    clone.querySelectorAll(".resulTableWraper").forEach((wrapper: Element) => {
+        (wrapper as HTMLElement).style.overflow = "visible";
     });
 
     try {
@@ -46,7 +47,9 @@ async function shareResults() {
             useCORS: true
         });
 
-        canvas.toBlob(async (blob) => {
+        canvas.toBlob(async (blob: Blob | null) => {
+            if (!blob) return;
+            
             try {
                 await navigator.clipboard.write([
                     new ClipboardItem({ "image/png": blob })
@@ -66,7 +69,7 @@ async function shareResults() {
     }
 }
 
-function showToast(message, duration = 3000) {
+function showToast(message: string, duration: number = 3000): void {
     const toast = document.createElement("div");
     toast.className = "toast";
     toast.innerText = message;

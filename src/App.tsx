@@ -3,25 +3,18 @@ import * as ReactModule from "react";
 import { Header } from './components/Header/Header';
 import { Stepper } from './components/Steeper/Stepper';
 import { LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner';
+import { CurrentStepRef, ViewsConfig } from './Types/Componets/StepperTypes';
 
-import { GeneralData } from './containers/GeneralData/GeneralData'
-import { Properties } from './containers/Properties/Properties'
+import { GeneralData } from './containers/GeneralData/GeneralData';
+import { Properties } from './containers/Properties/Properties';
 // import { Adjustment } from './containers/Adjustment/Adjustment'
 // import { Results } from './containers/Results/Results';
 
-// Type for the step setter function
-type StepSetter = ((value: number) => void) | null;
-
 // Module variable to handle current step and setter for external access
-interface CurrentStepRef {
-    value: number;
-    setter: StepSetter;
-}
-
 let currentStepRef: CurrentStepRef = { value: 0, setter: null }; 
 
 // Define the views type
-const views: Record<string, any> = {
+const views: ViewsConfig = {
     "Datos generales": <GeneralData />,
     "Propiedades": <Properties />,
     // "Ajustes": <Adjustment />,

@@ -1,8 +1,10 @@
+import React from "react";
+
 /**
  * ErrorMessage Component
  * Reusable component for displaying validation error messages
  */
-export function ErrorMessage({ error }) {
+export function ErrorMessage({ error }: { error?: string | null }) {
     if (!error) {
         return null;
     }

@@ -1,6 +1,7 @@
+import React from "react";
 import { nextStep } from "../../App";
 
-export function NextButton({ disabled = false }) {
+export function NextButton({ disabled = false }: { disabled?: boolean }) {
     const handleClick = () => {
         if (disabled) return;
         nextStep();

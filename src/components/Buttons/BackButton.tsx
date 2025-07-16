@@ -1,3 +1,4 @@
+import React from "react";
 import { prevStep } from "../../App";
 
 export function BackButton() {
@@ -6,7 +7,7 @@ export function BackButton() {
             className="button"
             onClick={() => prevStep()}
         >
-            Atras
+            Atrás
         </button>
     );
 }
