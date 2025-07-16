@@ -1,5 +1,7 @@
 import validator from 'validator';
 import { ValidationBase } from './ValidationBase.js';
+import { IValidationResult } from '../Types/Validation/ValidationBase.js';
+import { IAdjustment } from '../Types/Models/Adjustment.js';
 
 /**
  * Specific validation for adjustments form
@@ -11,30 +13,30 @@ export class AdjustmentValidation extends ValidationBase {
 
   /**
    * Validates the form to add a new adjustment
-   * @param {Object} data - Adjustment data
+   * @param {Object} data - Adjustment data with form field names
    * @returns {Object} Validation result
    */
-  validateAddAdjustment(data) {
+  validateAddAdjustment(data: { adjustmentName: string; adjustmentAmount: string | number; adjustmentType: string }): IValidationResult {
     this.clearErrors();
     let isValid = true;
 
     // Validate adjustment name/concept
-    if (!this.validateRequired(data.adjustmentName, 'adjustmentName', 'Adjustment concept is required')) {
+    if (!this.validateRequired(data.adjustmentName, 'adjustmentName', 'El concepto del ajuste es requerido')) {
       isValid = false;
     }
 
     // Validate adjustment value
-    if (!this.validateRequired(data.adjustmentAmount, 'adjustmentAmount', 'Adjustment value is required')) {
+    if (!this.validateRequired(data.adjustmentAmount, 'adjustmentAmount', 'El valor del ajuste es requerido')) {
       isValid = false;
     } else {
       // Validate that it's a valid number and greater than 0
-      if (!this.validateMinNumber(data.adjustmentAmount, 'adjustmentAmount', 0.01, 'Value must be greater than 0')) {
+      if (!this.validateMinNumber(data.adjustmentAmount, 'adjustmentAmount', 0.01, 'El valor debe ser mayor a 0')) {
         isValid = false;
       }
     }
 
     // Validate adjustment type (charge or discount)
-    if (!this.validateRequired(data.adjustmentType, 'adjustmentType', 'Must select if it is an additional charge or a discount')) {
+    if (!this.validateRequired(data.adjustmentType, 'adjustmentType', 'Debe seleccionar si es un cargo adicional o un descuento')) {
       isValid = false;
     }
 
@@ -47,9 +49,9 @@ export class AdjustmentValidation extends ValidationBase {
    * @param {string} adjustmentName - Adjustment name
    * @returns {Object}
    */
-  validateAdjustmentName(adjustmentName) {
+  validateAdjustmentName(adjustmentName: string): IValidationResult {
     this.clearErrors();
-    const isValid = this.validateRequired(adjustmentName, 'adjustmentName', 'Adjustment concept is required');
+    const isValid = this.validateRequired(adjustmentName, 'adjustmentName', 'El concepto del ajuste es requerido');
     
     this.setValidState(isValid);
     return this.getValidationResult();
@@ -60,22 +62,22 @@ export class AdjustmentValidation extends ValidationBase {
    * @param {number} adjustmentAmount - Adjustment value
    * @returns {Object}
    */
-  validateAdjustmentAmount(adjustmentAmount) {
+  validateAdjustmentAmount(adjustmentAmount: string | number): IValidationResult {
     this.clearErrors();
     let isValid = true;
 
-    if (!this.validateRequired(adjustmentAmount, 'adjustmentAmount', 'Adjustment value is required')) {
+    if (!this.validateRequired(adjustmentAmount, 'adjustmentAmount', 'El valor del ajuste es requerido')) {
       isValid = false;
     } else {
       // Use validator.js to validate that it's a valid decimal number
       const stringValue = adjustmentAmount.toString();
       if (!validator.isNumeric(stringValue, { no_symbols: false })) {
-        this.addError('adjustmentAmount', 'Must be a valid number');
+        this.addError('adjustmentAmount', 'Debe ser un número válido');
         isValid = false;
       } else {
-        const numValue = parseFloat(adjustmentAmount);
+        const numValue = parseFloat(adjustmentAmount.toString());
         if (numValue <= 0) {
-          this.addError('adjustmentAmount', 'Value must be greater than 0');
+          this.addError('adjustmentAmount', 'El valor debe ser mayor a 0');
           isValid = false;
         }
       }
@@ -90,17 +92,17 @@ export class AdjustmentValidation extends ValidationBase {
    * @param {string} adjustmentType - Adjustment type (CHARGE or DISCOUNT)
    * @returns {Object}
    */
-  validateAdjustmentType(adjustmentType) {
+  validateAdjustmentType(adjustmentType: string): IValidationResult {
     this.clearErrors();
     let isValid = true;
 
-    if (!this.validateRequired(adjustmentType, 'adjustmentType', 'Must select if it is an additional charge or a discount')) {
+    if (!this.validateRequired(adjustmentType, 'adjustmentType', 'Debe seleccionar si es un cargo adicional o un descuento')) {
       isValid = false;
     } else {
       // Validate that it's one of the allowed values
       const validTypes = ['CHARGE', 'DISCOUNT'];
       if (!validTypes.includes(adjustmentType)) {
-        this.addError('adjustmentType', 'Invalid adjustment type');
+        this.addError('adjustmentType', 'Tipo de ajuste inválido');
         isValid = false;
       }
     }
@@ -115,20 +117,20 @@ export class AdjustmentValidation extends ValidationBase {
    * @param {Array} existingAdjustments - Existing adjustments in the property
    * @returns {Object}
    */
-  validateUniqueAdjustmentName(adjustmentName, existingAdjustments) {
+  validateUniqueAdjustmentName(adjustmentName: string, existingAdjustments: IAdjustment[]): IValidationResult {
     this.clearErrors();
     let isValid = true;
 
-    if (!this.validateRequired(adjustmentName, 'adjustmentName', 'Adjustment concept is required')) {
+    if (!this.validateRequired(adjustmentName, 'adjustmentName', 'El concepto del ajuste es requerido')) {
       isValid = false;
     } else {
       // Check that no adjustment with the same name exists
       const isDuplicate = existingAdjustments.some(
-        adjustment => adjustment.name.toLowerCase().trim() === adjustmentName.toLowerCase().trim()
+        (adjustment: IAdjustment) => adjustment.note.toLowerCase().trim() === adjustmentName.toLowerCase().trim()
       );
 
       if (isDuplicate) {
-        this.addError('adjustmentName', 'An adjustment with this concept already exists in this property');
+        this.addError('adjustmentName', 'Ya existe un ajuste con este concepto en esta propiedad');
         isValid = false;
       }
     }
@@ -142,40 +144,41 @@ export class AdjustmentValidation extends ValidationBase {
    * @param {Array} adjustments - List of adjustments
    * @returns {Object}
    */
-  validateAdjustmentsList(adjustments) {
+  validateAdjustmentsList(adjustments: IAdjustment[]): IValidationResult {
     this.clearErrors();
     let isValid = true;
 
     if (!Array.isArray(adjustments)) {
-      this.addError('adjustments', 'Adjustments list is not valid');
+      this.addError('adjustments', 'La lista de ajustes no es válida');
       this.setValidState(false);
       return this.getValidationResult();
     }
 
     // Validate each individual adjustment
-    adjustments.forEach((adjustment, index) => {
+    adjustments.forEach((adjustment: IAdjustment, index: number) => {
       const fieldPrefix = `adjustment_${index}`;
       
-      if (!this.validateRequired(adjustment.name, `${fieldPrefix}_name`, 'Concept is required')) {
+      if (!this.validateRequired(adjustment.note, `${fieldPrefix}_note`, 'El concepto es requerido')) {
         isValid = false;
       }
 
-      if (!this.validateMinNumber(adjustment.amount, `${fieldPrefix}_amount`, 0.01, 'Value must be greater than 0')) {
+      if (!this.validateMinNumber(adjustment.value, `${fieldPrefix}_value`, 0.01, 'El valor debe ser mayor a 0')) {
         isValid = false;
       }
 
-      if (!['CHARGE', 'DISCOUNT'].includes(adjustment.type)) {
-        this.addError(`${fieldPrefix}_type`, 'Invalid adjustment type');
+      // Validate that type is valid (since IAdjustment uses IAdjustmentType)
+      if (!adjustment.type || !adjustment.type.Key) {
+        this.addError(`${fieldPrefix}_type`, 'Tipo de ajuste inválido');
         isValid = false;
       }
     });
 
     // Check for duplicate names
-    const names = adjustments.map(adj => adj.name.toLowerCase().trim());
-    const duplicates = names.filter((name, index) => names.indexOf(name) !== index);
+    const names = adjustments.map((adj: IAdjustment) => adj.note.toLowerCase().trim());
+    const duplicates = names.filter((name: string, index: number) => names.indexOf(name) !== index);
     
     if (duplicates.length > 0) {
-      this.addError('adjustments', 'There are adjustments with duplicate names');
+      this.addError('adjustments', 'Hay ajustes con nombres duplicados');
       isValid = false;
     }
 
@@ -188,7 +191,7 @@ export class AdjustmentValidation extends ValidationBase {
    * @param {string} amount - Amount as string
    * @returns {boolean}
    */
-  validateCurrencyFormat(amount) {
+  validateCurrencyFormat(amount: string): boolean {
     // Use validator.js to validate currency format
     return validator.isCurrency(amount, {
       symbol: '$',

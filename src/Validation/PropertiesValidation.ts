@@ -1,5 +1,6 @@
-import validator from 'validator';
 import { ValidationBase } from './ValidationBase.js';
+import { IValidationResult } from '../Types/Validation/ValidationBase.js';
+import { IPropertyFormData, IPropertyValidation } from '../Types/Validation/PropertiesValidation.js';
 
 /**
  * Specific validation for properties form
@@ -15,7 +16,7 @@ export class PropertiesValidation extends ValidationBase {
    * @param {Array} existingProperties - Array of existing properties to check for duplicates
    * @returns {Object} Validation result
    */
-  validateAddProperty(data, existingProperties = []) {
+  validateAddProperty(data: IPropertyFormData, existingProperties: IPropertyValidation[] = []): IValidationResult {
     this.clearErrors();
     let isValid = true;
 
@@ -25,7 +26,7 @@ export class PropertiesValidation extends ValidationBase {
     } else {
       // Check for duplicate property names
       const isDuplicate = existingProperties.some(
-        property => property.name.toLowerCase().trim() === data.propertyName.toLowerCase().trim()
+        (property: IPropertyValidation) => property.name.toLowerCase().trim() === data.propertyName.toLowerCase().trim()
       );
 
       if (isDuplicate) {
@@ -49,17 +50,17 @@ export class PropertiesValidation extends ValidationBase {
    * @param {boolean} isMultipleMeter - If it's multiple meter
    * @returns {Object} Validation result
    */
-  validatePropertiesTable(properties, isMultipleMeter = false) {
+  validatePropertiesTable(properties: IPropertyValidation[], isMultipleMeter: boolean = false): IValidationResult {
     this.clearErrors();
     let isValid = properties.length > 0;
     let percentageTotal = 0;
 
-    const percentageProperties = properties.filter(p => p.method === 'PERCENTAGE');
-    const peopleProperties = properties.filter(p => p.method === 'PEOPLE');
+    const percentageProperties = properties.filter((p: IPropertyValidation) => p.method === 'PERCENTAGE');
+    const peopleProperties = properties.filter((p: IPropertyValidation) => p.method === 'PEOPLE');
 
     if (isMultipleMeter) {
       // For multiple meter, validate that all values are >= 1
-      properties.forEach((property, index) => {
+      properties.forEach((property: IPropertyValidation, index: number) => {
         if (!this.validateMinNumber(property.baseValue, `property_${index}_value`, 1, 'Debe ser mayor o igual a 1')) {
           isValid = false;
         }
@@ -68,15 +69,15 @@ export class PropertiesValidation extends ValidationBase {
       // For single meter, validate by method
 
       // Validate properties with people method
-      peopleProperties.forEach((property, index) => {
+      peopleProperties.forEach((property: IPropertyValidation, index: number) => {
         if (!this.validateMinNumber(property.baseValue, `people_${index}_value`, 1, 'Debe ser mayor o igual a 1')) {
           isValid = false;
         }
       });
 
       // Validate properties with percentage method
-      percentageProperties.forEach((property, index) => {
-        const value = parseFloat(property.baseValue);
+      percentageProperties.forEach((property: IPropertyValidation, index: number) => {
+        const value = parseFloat(property.baseValue.toString());
         
         if (isNaN(value) || value < 1 || value > 100) {
           this.addError(`percentage_${index}_value`, 'Debe ser un porcentaje entre 1 y 100');
@@ -91,14 +92,14 @@ export class PropertiesValidation extends ValidationBase {
       if (percentageProperties.length > 0) {
         if (peopleProperties.length === 0 && percentageTotal !== 100) {
           isValid = false;
-          percentageProperties.forEach((property, index) => {
+          percentageProperties.forEach((property: IPropertyValidation, index: number) => {
             this.addError(`percentage_${index}_value`, 'El total debe sumar exactamente 100% si no hay otros métodos');
           });
         }
 
         if (peopleProperties.length > 0 && (percentageTotal <= 0 || percentageTotal >= 100)) {
           isValid = false;
-          percentageProperties.forEach((property, index) => {
+          percentageProperties.forEach((property: IPropertyValidation, index: number) => {
             this.addError(`percentage_${index}_value`, 'El total de porcentajes debe ser mayor a 0% y menor a 100% si hay otros métodos');
           });
         }

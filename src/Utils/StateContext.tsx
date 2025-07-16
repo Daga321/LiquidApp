@@ -21,9 +21,9 @@ export const StateProvider = ({ children }: IStateProviderProps) => {
             billValue: 0,
             valuePerPeople: 0,
             unit: "",
-            periodStart: new Date(),
-            periodEnd: new Date(),
-            dueDate: new Date(),
+            periodStart: undefined,
+            periodEnd: undefined,
+            dueDate: undefined,
             unitCost: 0,
             singleMeter: true
         },

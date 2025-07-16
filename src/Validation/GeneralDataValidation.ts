@@ -1,5 +1,11 @@
-import validator from 'validator';
 import { ValidationBase } from './ValidationBase.js';
+import { IValidationResult } from '../Types/Validation/ValidationBase.js';
+import { 
+  IGeneralDataValidation, 
+  IDateValidationData, 
+  IServiceValidationData, 
+  IMonetaryValidationData 
+} from '../Types/Validation/GeneralDataValidation.js';
 
 /**
  * Specific validation for general data form
@@ -14,7 +20,7 @@ export class GeneralDataValidation extends ValidationBase {
    * @param {Object} data - Invoice data object
    * @returns {Object} Validation result
    */
-  validate(data) {
+  validate(data: IGeneralDataValidation): IValidationResult {
     this.clearErrors();
     let isValid = true;
 
@@ -41,21 +47,10 @@ export class GeneralDataValidation extends ValidationBase {
       isValid = false;
     }
 
-    // Conditional validations based on meter type
-    if (data.singleMeter) {
-      // Single meter - validate bill value
-      if (!this.validateMinNumber(data.billValue, 'billValue', 1, 'Debe ser un número mayor o igual a 1')) {
-        isValid = false;
-      }
-    } else {
-      // Multiple meter - validate unit and unit cost
-      if (!this.validateRequired(data.unit, 'unit', 'Especifique la unidad de facturación')) {
-        isValid = false;
-      }
-
-      if (!this.validateMinNumber(data.unitCost, 'unitCost', 1, 'Debe ser un número mayor o igual a 1')) {
-        isValid = false;
-      }
+    // Validate monetary values based on meter type
+    const meterType = data.singleMeter ? 'single' : 'multiple';
+    if (!this.validateMonetaryValues(data, meterType)) {
+      isValid = false;
     }
 
     this.setValidState(isValid);
@@ -67,7 +62,7 @@ export class GeneralDataValidation extends ValidationBase {
    * @param {Object} data - Invoice data
    * @returns {boolean}
    */
-  validateDateLogic(data) {
+  validateDateLogic(data: IDateValidationData): boolean {
     let isValid = true;
     const today = new Date().toISOString().split('T')[0];
 
@@ -101,85 +96,29 @@ export class GeneralDataValidation extends ValidationBase {
   }
 
   /**
-   * Validates only the service name (for real-time use)
-   * @param {string} serviceName - Service name
-   * @param {string} serviceOption - Selected service option
-   * @returns {Object}
-   */
-  validateServiceName(serviceName, serviceOption) {
-    this.clearErrors();
-    let isValid = true;
-
-    // First validate that a service option is selected
-    if (!serviceOption || serviceOption === "") {
-      this.addError('serviceOption', 'Por favor seleccione un servicio del menú desplegable');
-      isValid = false;
-    } else if (serviceOption === "Otro") {
-      // If "Other" is selected, validate the custom service name
-      if (!this.validateRequired(serviceName, 'serviceName', 'Ingrese el nombre del servicio')) {
-        isValid = false;
-      }
-    }
-
-    this.setValidState(isValid);
-    return this.getValidationResult();
-  }
-
-  /**
-   * Validates only dates (for real-time use)
-   * @param {Object} dates - Object with dates
-   * @returns {Object}
-   */
-  validateDates(dates) {
-    this.clearErrors();
-    let isValid = true;
-
-    if (!this.validateRequired(dates.periodStart, 'periodStart', 'Ingrese la fecha de inicio del período')) {
-      isValid = false;
-    }
-
-    if (!this.validateRequired(dates.periodEnd, 'periodEnd', 'Ingrese la fecha de fin del período')) {
-      isValid = false;
-    }
-
-    if (!this.validateRequired(dates.dueDate, 'dueDate', 'Seleccione la fecha límite de pago')) {
-      isValid = false;
-    }
-
-    if (!this.validateDateLogic(dates)) {
-      isValid = false;
-    }
-
-    this.setValidState(isValid);
-    return this.getValidationResult();
-  }
-
-  /**
    * Validates only monetary values based on meter type
    * @param {Object} data - Monetary data
    * @param {string} meterType - Meter type
-   * @returns {Object}
+   * @returns {boolean}
    */
-  validateMonetaryValues(data, meterType) {
-    this.clearErrors();
+  validateMonetaryValues(data: IMonetaryValidationData, meterType: 'single' | 'multiple'): boolean {
     let isValid = true;
 
     if (meterType === 'single') {
-      if (!this.validateMinNumber(data.billValue, 'billValue', 1, 'Debe ser un número mayor o igual a 1')) {
+      if (!this.validateMinNumber(data.billValue!, 'billValue', 1, 'Debe ser un número mayor o igual a 1')) {
         isValid = false;
       }
     } else if (meterType === 'multiple') {
-      if (!this.validateRequired(data.unit, 'unit', 'Especifique la unidad de facturación')) {
+      if (!this.validateRequired(data.unit!, 'unit', 'Especifique la unidad de facturación')) {
         isValid = false;
       }
 
-      if (!this.validateMinNumber(data.unitCost, 'unitCost', 1, 'Debe ser un número mayor o igual a 1')) {
+      if (!this.validateMinNumber(data.unitCost!, 'unitCost', 1, 'Debe ser un número mayor o igual a 1')) {
         isValid = false;
       }
     }
 
-    this.setValidState(isValid);
-    return this.getValidationResult();
+    return isValid;
   }
 
   /**
@@ -187,7 +126,7 @@ export class GeneralDataValidation extends ValidationBase {
    * @param {Object} data - Invoice data object
    * @returns {boolean}
    */
-  validateServiceSelection(data) {
+  validateServiceSelection(data: IServiceValidationData): boolean {
     // Check if a service option has been selected (not the default empty option)
     if (!data.serviceOption || data.serviceOption === "") {
       this.addError('serviceOption', 'Por favor seleccione un servicio del menú desplegable');

@@ -1,3 +1,4 @@
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import { StateProvider } from "./Utils/StateContext";
@@ -10,9 +11,11 @@ if (!rootElement) {
 
 const root = createRoot(rootElement);
 root.render(
-  <StateProvider>
-    <App />
-  </StateProvider>
+  <StrictMode>
+    <StateProvider>
+      <App />
+    </StateProvider>
+  </StrictMode>
 );
 
 export function validate(data: any): boolean {

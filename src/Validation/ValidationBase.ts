@@ -1,10 +1,15 @@
+import { IValidationResult } from '../Types/Validation/ValidationBase.js';
+
 /**
  * Base class for all validations
  * Provides common functionality like error handling and validation state
  */
 export class ValidationBase {
+  protected errors: Map<string, string>;
+  protected isValidState: boolean;
+
   constructor() {
-    this.errors = new Map();
+    this.errors = new Map<string, string>();
     this.isValidState = false;
   }
 
@@ -13,7 +18,7 @@ export class ValidationBase {
    * @param {string} field - Field that has the error
    * @param {string} message - Error message
    */
-  addError(field, message) {
+  addError(field: string, message: string): void {
     if (message) {
       this.errors.set(field, message);
     } else {
@@ -24,7 +29,7 @@ export class ValidationBase {
   /**
    * Clears all errors
    */
-  clearErrors() {
+  clearErrors(): void {
     this.errors.clear();
   }
 
@@ -32,7 +37,7 @@ export class ValidationBase {
    * Checks if there are errors
    * @returns {boolean}
    */
-  hasErrors() {
+  hasErrors(): boolean {
     return this.errors.size > 0;
   }
 
@@ -40,7 +45,7 @@ export class ValidationBase {
    * Gets all current errors
    * @returns {Object}
    */
-  getErrors() {
+  getErrors(): Record<string, string> {
     return Object.fromEntries(this.errors);
   }
 
@@ -48,7 +53,7 @@ export class ValidationBase {
    * Returns the current validation state
    * @returns {boolean}
    */
-  isValid() {
+  isValid(): boolean {
     return this.isValidState && !this.hasErrors();
   }
 
@@ -56,7 +61,7 @@ export class ValidationBase {
    * Sets the validation state
    * @param {boolean} state 
    */
-  setValidState(state) {
+  setValidState(state: boolean): void {
     this.isValidState = state;
   }
 
@@ -64,7 +69,7 @@ export class ValidationBase {
    * Returns the complete validation result
    * @returns {Object}
    */
-  getValidationResult() {
+  getValidationResult(): IValidationResult {
     return {
       isValid: this.isValid(),
       errors: this.getErrors(),
@@ -77,7 +82,7 @@ export class ValidationBase {
    * @param {Object} data - Data to validate
    * @returns {Object} Validation result
    */
-  validate(data) {
+  validate(data: any): IValidationResult {
     throw new Error('The validate() method must be implemented by the child class');
   }
 
@@ -88,7 +93,7 @@ export class ValidationBase {
    * @param {string} message - Error message
    * @returns {boolean}
    */
-  validateRequired(value, field, message) {
+  validateRequired(value: any, field: string, message: string): boolean {
     const isEmpty = value === null || value === undefined || 
                    (typeof value === 'string' && value.trim() === '') ||
                    (typeof value === 'number' && isNaN(value));
@@ -110,8 +115,8 @@ export class ValidationBase {
    * @param {string} message - Error message
    * @returns {boolean}
    */
-  validateMinNumber(value, field, min, message) {
-    const numValue = parseFloat(value);
+  validateMinNumber(value: string | number, field: string, min: number, message: string): boolean {
+    const numValue = parseFloat(value.toString());
     
     if (isNaN(numValue) || numValue < min) {
       this.addError(field, message);
@@ -130,8 +135,8 @@ export class ValidationBase {
    * @param {string} message - Error message
    * @returns {boolean}
    */
-  validateMaxNumber(value, field, max, message) {
-    const numValue = parseFloat(value);
+  validateMaxNumber(value: string | number, field: string, max: number, message: string): boolean {
+    const numValue = parseFloat(value.toString());
     
     if (isNaN(numValue) || numValue > max) {
       this.addError(field, message);
@@ -149,7 +154,7 @@ export class ValidationBase {
    * @param {string} message - Error message
    * @returns {boolean}
    */
-  validateDateNotFuture(dateValue, field, message) {
+  validateDateNotFuture(dateValue: string, field: string, message: string): boolean {
     if (!dateValue) return true;
     
     const today = new Date().toISOString().split('T')[0];
@@ -171,7 +176,7 @@ export class ValidationBase {
    * @param {string} message - Error message
    * @returns {boolean}
    */
-  validateDateAfter(dateValue, compareDate, field, message) {
+  validateDateAfter(dateValue: string, compareDate: string, field: string, message: string): boolean {
     if (!dateValue || !compareDate) return true;
     
     if (dateValue <= compareDate) {
@@ -191,7 +196,7 @@ export class ValidationBase {
    * @param {string} message - Error message
    * @returns {boolean}
    */
-  validateDateBefore(dateValue, compareDate, field, message) {
+  validateDateBefore(dateValue: string, compareDate: string, field: string, message: string): boolean {
     if (!dateValue || !compareDate) return true;
     
     if (dateValue >= compareDate) {
