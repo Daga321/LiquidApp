@@ -39,11 +39,7 @@ export function Properties() {
         addProperty({
             name: formData.propertyName,
             method: formData.liquidationMethod,
-            baseValue: formData.methodValue,
-            amountToPay: 0,
-            adjustmentValue: 0,
-            totalToPay: 0,
-            adjustmentsList: []
+            baseValue: formData.methodValue
         });
 
         // Reset form
