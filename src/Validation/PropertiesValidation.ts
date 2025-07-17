@@ -36,7 +36,7 @@ export class PropertiesValidation extends ValidationBase {
     }
 
     // Validate liquidation method
-    if (!this.validateRequired(data.liquidationMethod, 'liquidationMethod', 'Debe seleccionar un método de liquidación')) {
+    if (!data.liquidationMethod || !this.validateRequired(data.liquidationMethod.Key, 'liquidationMethod', 'Debe seleccionar un método de liquidación')) {
       isValid = false;
     }
 

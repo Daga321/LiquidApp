@@ -1,9 +1,11 @@
+import { ILiquidationMethod } from "../Models/Enums/LiquidationMethodEnum";
+
 /**
  * Interface for property form data used in validation
  */
 export interface IPropertyFormData {
   propertyName: string;
-  liquidationMethod: string;
+  liquidationMethod: ILiquidationMethod | undefined;
 }
 
 /**

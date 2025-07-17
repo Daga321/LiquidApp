@@ -37,7 +37,7 @@ export function PropertiesForm({
                 <ErrorMessage error={errors.propertyName} />
             </div>
 
-            {formData.liquidationMethod !== LiquidationMethodEnum.CONSUMPTION.Key && (
+            {formData.liquidationMethod?.Key !== LiquidationMethodEnum.CONSUMPTION.Key && (
                 <div className="form-group">
                 <label>Método de liquidación</label>
                 <div className="radio-group">
@@ -46,8 +46,12 @@ export function PropertiesForm({
                             type="radio" 
                             name="method" 
                             value={LiquidationMethodEnum.PERCENTAGE.Key}
-                            checked={formData.liquidationMethod === LiquidationMethodEnum.PERCENTAGE.Key}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onFormDataChange("liquidationMethod", e.target.value)}
+                            checked={formData.liquidationMethod?.Key === LiquidationMethodEnum.PERCENTAGE.Key}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                const selectedKey = e.target.value;
+                                const selectedMethod = Object.values(LiquidationMethodEnum).find(method => method.Key === selectedKey);
+                                onFormDataChange("liquidationMethod", selectedMethod || LiquidationMethodEnum.PERCENTAGE);
+                            }}
                         /> 
                         {LiquidationMethodEnum.PERCENTAGE.Method}
                     </label>
@@ -56,8 +60,12 @@ export function PropertiesForm({
                             type="radio" 
                             name="method" 
                             value={LiquidationMethodEnum.PEOPLE.Key}
-                            checked={formData.liquidationMethod === LiquidationMethodEnum.PEOPLE.Key}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onFormDataChange("liquidationMethod", e.target.value)}
+                            checked={formData.liquidationMethod?.Key === LiquidationMethodEnum.PEOPLE.Key}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                const selectedKey = e.target.value;
+                                const selectedMethod = Object.values(LiquidationMethodEnum).find(method => method.Key === selectedKey);
+                                onFormDataChange("liquidationMethod", selectedMethod || LiquidationMethodEnum.PEOPLE);
+                            }}
                         /> 
                         {LiquidationMethodEnum.PEOPLE.Method}
                     </label>
