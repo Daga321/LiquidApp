@@ -3,12 +3,13 @@
  */
 export interface IInvoice {
   serviceName: string;
+  serviceOption: string;
   billValue: number;
   valuePerPeople: number;
   unit: string;
-  periodStart: Date;
-  periodEnd: Date;
-  dueDate: Date;
+  periodStart?: Date;
+  periodEnd?: Date;
+  dueDate?: Date;
   unitCost: number;
   singleMeter: boolean;
 }
@@ -18,12 +19,13 @@ export interface IInvoice {
  */
 export interface IInvoiceConstructor {
   serviceName: string;
+  serviceOption: string;
   billValue: number;
   valuePerPeople: number;
   unit: string;
-  periodStart: Date;
-  periodEnd: Date;
-  dueDate: Date;
+  periodStart: Date | undefined;
+  periodEnd: Date | undefined;
+  dueDate: Date | undefined;
   unitCost: number;
   singleMeter: boolean;
 }

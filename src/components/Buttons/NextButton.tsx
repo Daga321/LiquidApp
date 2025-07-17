@@ -1,4 +1,3 @@
-import React from "react";
 import { nextStep } from "../../App";
 
 export function NextButton({ disabled = false }: { disabled?: boolean }) {

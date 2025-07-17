@@ -1,5 +1,3 @@
-import React from "react";
-
 /**
  * ErrorMessage Component
  * Reusable component for displaying validation error messages

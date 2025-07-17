@@ -1,16 +1,8 @@
 import React from "react";
 import { LiquidationMethodEnum } from "../../Models/Enums/LiquidationMethodEnum";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
-import { IPropertyFormData } from "../../Types/Validation/PropertiesValidation";
+import { IPropertiesFormProps } from "@/Types/Componets/IPropertiesFormProps";
 
-// Interface for component props
-interface IPropertiesFormProps {
-    formData: IPropertyFormData & { methodValue: number };
-    onFormDataChange: (field: string, value: string | number) => void;
-    onAddProperty: () => void;
-    errors?: Record<string, string>;
-    canAddProperty?: boolean;
-}
 
 /**
  * PropertiesForm Component
@@ -22,7 +14,7 @@ export function PropertiesForm({
     onAddProperty,
     errors = {},
     canAddProperty = false
-}: IPropertiesFormProps): React.JSX.Element {
+}: IPropertiesFormProps) {
     const handleAddProperty = () => {
         if (!canAddProperty) {
             return;

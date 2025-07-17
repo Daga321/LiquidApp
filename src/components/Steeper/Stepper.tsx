@@ -1,4 +1,3 @@
-import React from "react";
 import './Stepper.css'; // Import the stepper styles
 import { StepperProps } from '../../Types/Componets/StepperTypes';
 

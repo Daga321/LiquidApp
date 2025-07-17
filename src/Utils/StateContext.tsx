@@ -1,23 +1,25 @@
-import { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { IInvoice } from "../Types/Models/Invoice";
 import { IProperty } from "../Types/Models/Property";
 import { IAdjustment } from "../Types/Models/Adjustment";
 import { ILiquidationMethod } from "../Types/Models/Enums/LiquidationMethodEnum";
 import { IAdjustmentType } from "../Types/Models/Enums/AdjustmentTypeEnum";
 import { IStateContextValue } from "../Types/StateContext/IStateContextValue";
+import { IAppState } from "../Types/StateContext/IAppState";
 
 // Interface for provider props
 interface IStateProviderProps {
-    children: any;
+    children: React.ReactNode;
 }
 
-const StateContext = createContext(undefined as IStateContextValue | undefined);
+const StateContext = createContext<IStateContextValue | undefined>(undefined);
 
 export const StateProvider = ({ children }: IStateProviderProps) => {
-    const [data, setData] = useState({
+    const [data, setData] = useState<IAppState>({
         // Invoice data
         invoice: {
             serviceName: "",
+            serviceOption: "",
             billValue: 0,
             valuePerPeople: 0,
             unit: "",
@@ -28,11 +30,7 @@ export const StateProvider = ({ children }: IStateProviderProps) => {
             singleMeter: true
         },
         // Properties list
-        properties: [],
-        // Optional state properties
-        currentStep: 0,
-        isLoading: false,
-        results: null
+        properties: [] as IProperty[]
     });
 
     const handleChange = (e: { target: { name: string; value: any } }): void => {
@@ -55,7 +53,7 @@ export const StateProvider = ({ children }: IStateProviderProps) => {
             adjustmentsList: propertyData?.adjustmentsList || []
         };
 
-        setData((prev) => ({
+        setData((prev: IAppState) => ({
             ...prev,
             properties: [
                 ...prev.properties,
@@ -65,16 +63,16 @@ export const StateProvider = ({ children }: IStateProviderProps) => {
     };
 
     const removeProperty = (propertyIndex: number): void => {
-        setData((prev) => ({
+        setData((prev: IAppState) => ({
             ...prev,
-            properties: prev.properties.filter((_, index) => index !== propertyIndex)
+            properties: prev.properties.filter((_: IProperty, index: number) => index !== propertyIndex)
         }));
     };
 
     const updateProperty = (propertyIndex: number, field: keyof IProperty, value: any): void => {
-        setData((prev) => ({
+        setData((prev: IAppState) => ({
             ...prev,
-            properties: prev.properties.map((prop, index) =>
+            properties: prev.properties.map((prop: IProperty, index: number) =>
                 index === propertyIndex ? { ...prop, [field]: value } : prop
             )
         }));
@@ -82,9 +80,9 @@ export const StateProvider = ({ children }: IStateProviderProps) => {
 
     // Helper functions for managing adjustments
     const addAdjustment = (propertyIndex: number, adjustment: Partial<IAdjustment>): void => {
-        setData((prev) => ({
+        setData((prev: IAppState) => ({
             ...prev,
-            properties: prev.properties.map((prop, index) =>
+            properties: prev.properties.map((prop: IProperty, index: number) =>
                 index === propertyIndex
                     ? {
                         ...prop,
@@ -103,13 +101,13 @@ export const StateProvider = ({ children }: IStateProviderProps) => {
     };
 
     const removeAdjustment = (propertyIndex: number, adjustmentIndex: number): void => {
-        setData((prev) => ({
+        setData((prev: IAppState) => ({
             ...prev,
-            properties: prev.properties.map((prop, index) =>
+            properties: prev.properties.map((prop: IProperty, index: number) =>
                 index === propertyIndex
                     ? {
                         ...prop,
-                        adjustmentsList: prop.adjustmentsList.filter((_, adjIndex) => adjIndex !== adjustmentIndex)
+                        adjustmentsList: prop.adjustmentsList.filter((_: IAdjustment, adjIndex: number) => adjIndex !== adjustmentIndex)
                     }
                     : prop
             )
@@ -117,13 +115,13 @@ export const StateProvider = ({ children }: IStateProviderProps) => {
     };
 
     const updateAdjustment = (propertyIndex: number, adjustmentIndex: number, field: keyof IAdjustment, value: any): void => {
-        setData((prev) => ({
+        setData((prev: IAppState) => ({
             ...prev,
-            properties: prev.properties.map((prop, index) =>
+            properties: prev.properties.map((prop: IProperty, index: number) =>
                 index === propertyIndex
                     ? {
                         ...prop,
-                        adjustmentsList: prop.adjustmentsList.map((adj, adjIndex) =>
+                        adjustmentsList: prop.adjustmentsList.map((adj: IAdjustment, adjIndex: number) =>
                             adjIndex === adjustmentIndex ? { ...adj, [field]: value } : adj
                         )
                     }
@@ -134,7 +132,7 @@ export const StateProvider = ({ children }: IStateProviderProps) => {
 
     // Helper function to update invoice data
     const updateInvoice = (field: keyof IInvoice, value: any): void => {
-        setData((prev) => ({
+        setData((prev: IAppState) => ({
             ...prev,
             invoice: {
                 ...prev.invoice,
@@ -144,8 +142,20 @@ export const StateProvider = ({ children }: IStateProviderProps) => {
     };
 
     const contextValue: IStateContextValue = {
-        data,
-        setData,
+        data: {
+            invoice: data.invoice,
+            properties: data.properties
+        },
+        setData: (newData) => {
+            if (typeof newData === 'function') {
+                setData((prev: IAppState) => {
+                    const result = newData({ invoice: prev.invoice, properties: prev.properties });
+                    return { ...prev, ...result };
+                });
+            } else {
+                setData((prev: IAppState) => ({ ...prev, ...newData }));
+            }
+        },
         handleChange,
         // Property management
         addProperty,
@@ -156,7 +166,7 @@ export const StateProvider = ({ children }: IStateProviderProps) => {
         removeAdjustment,
         updateAdjustment,
         // Invoice management
-        updateInvoice,
+        updateInvoice: updateInvoice,
     };
 
     return (

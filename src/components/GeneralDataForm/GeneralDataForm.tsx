@@ -11,7 +11,7 @@ export function GeneralDataForm({
     invoiceData, 
     onUpdateInvoice, 
     errors = {}
-}: IGeneralDataFormProps): React.JSX.Element {
+}: IGeneralDataFormProps) {
     const [showCustomService, setShowCustomService] = useState((invoiceData as any).serviceOption === "Otro");
     const [showMeterInputs, setShowMeterInputs] = useState(invoiceData.singleMeter === false);
 

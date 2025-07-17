@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useStateContext } from "../../Utils/StateContext";
 import { PropertiesForm } from "../../components/PropertiesForm/PropertiesForm";
 import { NextButton } from "../../components/Buttons/NextButton";
@@ -8,7 +8,7 @@ import { IValidationResult } from "../../Types/Validation/ValidationBase";
 import { IProperty } from "../../Types/Models/Property";
 import { IPropertyFormData, IPropertyValidation } from "../../Types/Validation/PropertiesValidation";
 
-export function Properties(): React.JSX.Element {
+export function Properties(){
     const { data, addProperty } = useStateContext();
     
     // Local state for form inputs
