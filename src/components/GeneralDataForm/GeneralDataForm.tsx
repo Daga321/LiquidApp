@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
-import { MonetaryInput } from "../MonetaryInput/MonetaryInput.jsx";
-import { ErrorMessage } from "../ErrorMessage/ErrorMessage.jsx";
+import React, { useState, useEffect } from "react";
+import { MonetaryInput } from "../MonetaryInput/MonetaryInput";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
+import { IGeneralDataFormProps } from "../../Types/Componets/IGeneralDataFormProps";
 
 /**
  * GeneralDataForm Component
@@ -10,24 +11,24 @@ export function GeneralDataForm({
     invoiceData, 
     onUpdateInvoice, 
     errors = {}
-}) {
-    const [showCustomService, setShowCustomService] = useState(invoiceData.serviceOption === "Otro");
+}: IGeneralDataFormProps): React.JSX.Element {
+    const [showCustomService, setShowCustomService] = useState((invoiceData as any).serviceOption === "Otro");
     const [showMeterInputs, setShowMeterInputs] = useState(invoiceData.singleMeter === false);
 
     // Update local state when invoiceData changes
     useEffect(() => {
-        setShowCustomService(invoiceData.serviceOption === "Otro");
+        setShowCustomService((invoiceData as any).serviceOption === "Otro");
         setShowMeterInputs(invoiceData.singleMeter === false);
-    }, [invoiceData.serviceOption, invoiceData.singleMeter]);
+    }, [(invoiceData as any).serviceOption, invoiceData.singleMeter]);
 
-    const handleServiceChange = (e) => {
+    const handleServiceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value;
         const isOther = value === "Otro";
         
         setShowCustomService(isOther);
         
         // Save the selected service option
-        onUpdateInvoice("serviceOption", value);
+        onUpdateInvoice("serviceOption" as any, value);
         
         if (isOther) {
             onUpdateInvoice("serviceName", "");
@@ -36,7 +37,7 @@ export function GeneralDataForm({
         }
     };
 
-    const handleMeterChange = (e) => {
+    const handleMeterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const isMultiple = e.target.value === "multiple-meter";
         const isSingle = e.target.value === "single-meter";
         setShowMeterInputs(isMultiple);
@@ -44,12 +45,12 @@ export function GeneralDataForm({
     };
 
     // Helper function to get today's date in YYYY-MM-DD format
-    const getTodayDate = () => {
+    const getTodayDate = (): string => {
         return new Date().toISOString().split('T')[0];
     };
 
     // Helper function to get the day before a given date
-    const getDayBefore = (dateString) => {
+    const getDayBefore = (dateString: string): string | undefined => {
         if (!dateString) return undefined;
         const date = new Date(dateString);
         date.setDate(date.getDate() - 1);
@@ -57,7 +58,7 @@ export function GeneralDataForm({
     };
 
     // Helper function to get the day after a given date
-    const getDayAfter = (dateString) => {
+    const getDayAfter = (dateString: string): string | undefined => {
         if (!dateString) return undefined;
         const date = new Date(dateString);
         date.setDate(date.getDate() + 1);
@@ -70,7 +71,7 @@ export function GeneralDataForm({
                 <label>Tipo de servicio</label>
                 <select 
                     className={`custom-select ${errors.serviceOption ? 'error' : ''}`} 
-                    value={invoiceData.serviceOption || ""}
+                    value={(invoiceData as any).serviceOption || ""}
                     onChange={handleServiceChange}
                 >
                     <option value="">Seleccione un servicio</option>
@@ -88,7 +89,7 @@ export function GeneralDataForm({
                     <input 
                         type="text" 
                         value={invoiceData.serviceName}
-                        onChange={(e) => onUpdateInvoice("serviceName", e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => onUpdateInvoice("serviceName", e.target.value)}
                         placeholder="Nombre del servicio"
                         className={errors.serviceName ? 'error' : ''}
                     />
@@ -101,8 +102,8 @@ export function GeneralDataForm({
                 <input 
                     type="date" 
                     id="period-start"
-                    value={invoiceData.periodStart || ""}
-                    onChange={(e) => onUpdateInvoice("periodStart", e.target.value)}
+                    value={invoiceData.periodStart ? invoiceData.periodStart.toString().split('T')[0] : ""}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => onUpdateInvoice("periodStart", e.target.value)}
                     max={getDayBefore(getTodayDate())} // Cannot be in the future
                     className={errors.periodStart ? 'error' : ''}
                 />
@@ -114,9 +115,9 @@ export function GeneralDataForm({
                 <input 
                     type="date" 
                     id="period-end"
-                    value={invoiceData.periodEnd || ""}
-                    onChange={(e) => onUpdateInvoice("periodEnd", e.target.value)}
-                    min={getDayAfter(invoiceData.periodStart)} // Must be after period start
+                    value={invoiceData.periodEnd ? invoiceData.periodEnd.toString().split('T')[0] : ""}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => onUpdateInvoice("periodEnd", e.target.value)}
+                    min={getDayAfter(invoiceData.periodStart ? invoiceData.periodStart.toString().split('T')[0] : "")} // Must be after period start
                     max={getTodayDate()} // Cannot be after today
                     className={errors.periodEnd ? 'error' : ''}
                 />
@@ -128,9 +129,9 @@ export function GeneralDataForm({
                 <input 
                     type="date" 
                     id="due-date"
-                    value={invoiceData.dueDate || ""}
-                    onChange={(e) => onUpdateInvoice("dueDate", e.target.value)}
-                    min={getDayAfter(invoiceData.periodEnd)} // Must be after period end
+                    value={invoiceData.dueDate ? invoiceData.dueDate.toString().split('T')[0] : ""}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => onUpdateInvoice("dueDate", e.target.value)}
+                    min={getDayAfter(invoiceData.periodEnd ? invoiceData.periodEnd.toString().split('T')[0] : "")} // Must be after period end
                     className={errors.dueDate ? 'error' : ''}
                 />
                 <ErrorMessage error={errors.dueDate} />
@@ -168,7 +169,7 @@ export function GeneralDataForm({
                     <MonetaryInput
                         id="invoice-value" 
                         value={invoiceData.billValue || 0}
-                        onChange={(value) => onUpdateInvoice("billValue", value)}
+                        onChange={(value: number) => onUpdateInvoice("billValue", value)}
                         placeholder="$0.00"
                         className={errors.billValue ? 'error' : ''}
                     />
@@ -185,7 +186,7 @@ export function GeneralDataForm({
                             id="unit" 
                             placeholder="Ej: m³"
                             value={invoiceData.unit || ""}
-                            onChange={(e) => onUpdateInvoice("unit", e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onUpdateInvoice("unit", e.target.value)}
                             className={errors.unit ? 'error' : ''}
                         />
                         <ErrorMessage error={errors.unit} />
@@ -196,7 +197,7 @@ export function GeneralDataForm({
                         <MonetaryInput
                             id="unit-cost" 
                             value={invoiceData.unitCost || 0}
-                            onChange={(value) => onUpdateInvoice("unitCost", value)}
+                            onChange={(value: number) => onUpdateInvoice("unitCost", value)}
                             placeholder="$0.000"
                             className={errors.unitCost ? 'error' : ''}
                         />

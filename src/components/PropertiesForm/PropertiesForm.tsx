@@ -1,5 +1,16 @@
-import { LiquidationMethodEnum } from "../../Models/Enums/LiquidationMethodEnum.js";
-import { ErrorMessage } from "../ErrorMessage/ErrorMessage.jsx";
+import React from "react";
+import { LiquidationMethodEnum } from "../../Models/Enums/LiquidationMethodEnum";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
+import { IPropertyFormData } from "../../Types/Validation/PropertiesValidation";
+
+// Interface for component props
+interface IPropertiesFormProps {
+    formData: IPropertyFormData & { methodValue: number };
+    onFormDataChange: (field: string, value: string | number) => void;
+    onAddProperty: () => void;
+    errors?: Record<string, string>;
+    canAddProperty?: boolean;
+}
 
 /**
  * PropertiesForm Component
@@ -11,7 +22,7 @@ export function PropertiesForm({
     onAddProperty,
     errors = {},
     canAddProperty = false
-}) {
+}: IPropertiesFormProps): React.JSX.Element {
     const handleAddProperty = () => {
         if (!canAddProperty) {
             return;
@@ -28,7 +39,7 @@ export function PropertiesForm({
                     id="property-name" 
                     placeholder="Ej: Local 1, Apto 101"
                     value={formData.propertyName}
-                    onChange={(e) => onFormDataChange("propertyName", e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => onFormDataChange("propertyName", e.target.value)}
                     className={errors.propertyName ? 'error' : ''}
                 />
                 <ErrorMessage error={errors.propertyName} />
@@ -44,7 +55,7 @@ export function PropertiesForm({
                             name="method" 
                             value={LiquidationMethodEnum.PERCENTAGE.Key}
                             checked={formData.liquidationMethod === LiquidationMethodEnum.PERCENTAGE.Key}
-                            onChange={(e) => onFormDataChange("liquidationMethod", e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onFormDataChange("liquidationMethod", e.target.value)}
                         /> 
                         {LiquidationMethodEnum.PERCENTAGE.Method}
                     </label>
@@ -54,7 +65,7 @@ export function PropertiesForm({
                             name="method" 
                             value={LiquidationMethodEnum.PEOPLE.Key}
                             checked={formData.liquidationMethod === LiquidationMethodEnum.PEOPLE.Key}
-                            onChange={(e) => onFormDataChange("liquidationMethod", e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onFormDataChange("liquidationMethod", e.target.value)}
                         /> 
                         {LiquidationMethodEnum.PEOPLE.Method}
                     </label>

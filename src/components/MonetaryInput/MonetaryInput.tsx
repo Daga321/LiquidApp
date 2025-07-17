@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { MonetaryInputProps } from '../../Types/Componets/MonetaryInputTypes';
 
 /**
  * MonetaryInput Component
@@ -13,14 +14,14 @@ export function MonetaryInput({
     disabled = false,
     min = 0,
     ...props
-}) {
+}: MonetaryInputProps) {
     const [displayValue, setDisplayValue] = useState('$0');
 
     // Format number to Colombian peso format with $ symbol
-    const formatToDisplay = (num) => {
+    const formatToDisplay = (num: number): string => {
         if (!num || num === 0) return '$0';
         
-        const numValue = parseFloat(num);
+        const numValue = parseFloat(num.toString());
         if (isNaN(numValue)) return '$0';
         
         // Format with Colombian locale (. for thousands, , for decimals)
@@ -33,7 +34,7 @@ export function MonetaryInput({
     };
 
     // Parse display value back to number (remove $ and format indicators)
-    const parseFromDisplay = (str) => {
+    const parseFromDisplay = (str: string): number => {
         if (!str || str === '$' || str === '$0') return 0;
         
         // Remove $ symbol and any spaces
@@ -59,7 +60,7 @@ export function MonetaryInput({
     };
 
     // Format input as user types
-    const formatRealTime = (inputStr) => {
+    const formatRealTime = (inputStr: string): string => {
         // Always ensure it starts with $
         if (!inputStr.startsWith('$')) {
             inputStr = '$' + inputStr.replace(/\$/g, '');
@@ -107,7 +108,7 @@ export function MonetaryInput({
     }, [value]);
 
     // Handle input change with real-time formatting
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let inputValue = e.target.value;
         
         // Prevent removing the $ symbol
@@ -179,12 +180,13 @@ export function MonetaryInput({
     };
 
     // Handle key down to prevent certain keys and manage cursor
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const { key, target } = e;
-        const { selectionStart, selectionEnd, value } = target;
+        const inputTarget = target as HTMLInputElement;
+        const { selectionStart, selectionEnd, value } = inputTarget;
         
         // Prevent deleting the $ symbol
-        if ((key === 'Backspace' || key === 'Delete') && selectionStart <= 1) {
+        if ((key === 'Backspace' || key === 'Delete') && (selectionStart ?? 0) <= 1) {
             e.preventDefault();
             return;
         }
@@ -202,13 +204,15 @@ export function MonetaryInput({
         if (key === '.') {
             e.preventDefault();
             if (!value.includes(',')) {
+                const start = selectionStart ?? 0;
+                const end = selectionEnd ?? 0;
                 // Insert comma instead of period
-                const newValue = value.slice(0, selectionStart) + ',' + value.slice(selectionEnd);
-                target.value = newValue;
-                target.setSelectionRange(selectionStart + 1, selectionStart + 1);
+                const newValue = value.slice(0, start) + ',' + value.slice(end);
+                inputTarget.value = newValue;
+                inputTarget.setSelectionRange(start + 1, start + 1);
                 // Trigger onChange manually
                 const event = new Event('input', { bubbles: true });
-                target.dispatchEvent(event);
+                inputTarget.dispatchEvent(event);
             }
             return;
         }
@@ -230,7 +234,7 @@ export function MonetaryInput({
             const decimalPart = value.substring(commaIndex + 1);
             
             // If cursor is after comma and we already have 2 decimal digits
-            if (selectionStart > commaIndex && decimalPart.length >= 2) {
+            if ((selectionStart ?? 0) > commaIndex && decimalPart.length >= 2) {
                 e.preventDefault();
             }
         }
