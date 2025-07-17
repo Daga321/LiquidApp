@@ -1,16 +1,25 @@
-tr.moving {
+/* Solo aplicar animaciones a las celdas de contenido, no a las de agrupación ni acciones */
+tr.moving td:not(.table-actions):not([rowspan]) {
     position: relative;
     z-index: 2;
     transition: transform 1s ease, box-shadow 1s ease;
 }
 
 /* simulet origin row elevate */
-tr.to-up {
+tr.to-up td:not(.table-actions):not([rowspan]) {
     animation: elevate-down 1s forwards;
 }
 
-tr.to-down {
+tr.to-down td:not(.table-actions):not([rowspan]) {
     animation: elevate-up 1s forwards;
+}
+
+/* Mantener las celdas de agrupación y acciones estáticas */
+tr.moving .table-actions,
+tr.moving td[rowspan] {
+    position: relative;
+    z-index: 1;
+    transform: none !important; /* Asegurar que no se muevan */
 }
 
 @keyframes elevate-up {
@@ -56,12 +65,22 @@ tr.to-down {
 }
 
 /* Simulate destiny row sink */
-tr.from-up {
+tr.from-up td:not(.table-actions):not([rowspan]) {
     animation: sink-up 1s forwards;
 }
 
-tr.from-down {
+tr.from-down td:not(.table-actions):not([rowspan]) {
     animation: sink-down 1s forwards;
+}
+
+/* Mantener las celdas de agrupación y acciones estáticas para las filas de destino */
+tr.from-up .table-actions,
+tr.from-up td[rowspan],
+tr.from-down .table-actions,
+tr.from-down td[rowspan] {
+    position: relative;
+    z-index: 1;
+    transform: none !important; /* Asegurar que no se muevan */
 }
 
 @keyframes sink-up {
@@ -109,8 +128,18 @@ tr.from-down {
 }
 
 
-tr.removing-zoom {
+/* Animación de eliminación solo para celdas de contenido */
+tr.removing-zoom td:not(.table-actions):not([rowspan]) {
     animation: zoom-fade-out 0.6s ease forwards;
+}
+
+/* Mantener las celdas de agrupación y acciones estáticas durante la eliminación */
+tr.removing-zoom .table-actions,
+tr.removing-zoom td[rowspan] {
+    position: relative;
+    z-index: 1;
+    transform: none !important; /* Asegurar que no se muevan */
+    opacity: 1 !important; /* Mantener visible */
 }
 
 @keyframes zoom-fade-out {

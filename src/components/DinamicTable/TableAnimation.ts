@@ -13,14 +13,33 @@ export function updateActions({ tableSelector, onMove, onDelete }: TableAnimatio
         const prevRow = rows[index - 1] as HTMLElement | undefined;
         const nextRow = rows[index + 1] as HTMLElement | undefined;
 
-        if (index > 0 && prevRow?.getAttribute("data-property-index") === currentProperty) {
-            cell.appendChild(createMoveUpButton(row as HTMLElement, index, onMove));
+        const isFirst = index === 0;
+        const isLast = index === rows.length - 1;
+        
+        const canMoveUp = !isFirst && prevRow?.getAttribute("data-property-index") === currentProperty;
+        const canMoveDown = !isLast && nextRow?.getAttribute("data-property-index") === currentProperty;
+
+        // Add move up button only if not first
+        if (canMoveUp) {
+            const upButton = createMoveUpButton(row as HTMLElement, index, onMove);
+            // Si solo puede moverse hacia arriba, que ocupe más espacio
+            if (!canMoveDown) {
+                upButton.classList.add("wide-button");
+            }
+            cell.appendChild(upButton);
         }
 
-        if (index < rows.length - 1 && nextRow?.getAttribute("data-property-index") === currentProperty) {
-            cell.appendChild(createMoveDownButton(row as HTMLElement, index, onMove));
+        // Add move down button only if not last
+        if (canMoveDown) {
+            const downButton = createMoveDownButton(row as HTMLElement, index, onMove);
+            // Si solo puede moverse hacia abajo, que ocupe más espacio
+            if (!canMoveUp) {
+                downButton.classList.add("wide-button");
+            }
+            cell.appendChild(downButton);
         }
 
+        // Always add delete button
         cell.appendChild(createDeleteButton(row as HTMLElement, index, onDelete));
     });
 }
@@ -85,7 +104,9 @@ function removeRowWithEffect(row: HTMLElement, callback: () => void): void {
     row.classList.add("removing-zoom");
 
     setTimeout(() => {
-        row.remove();
+        row.classList.remove("removing-zoom");
+        // Don't remove the row from DOM - let React handle it
+        // row.remove();
         callback();
     }, 600);
 }

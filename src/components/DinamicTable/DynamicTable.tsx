@@ -75,31 +75,14 @@ export function DynamicTable<T>({
     }
   }, [data, withActions]);
 
-  const renderActions = (item: T, index: number) => (
-    <td className="table-actions">
-      <button 
-        className="button action-button"
-        onClick={() => onAction?.("up", item)}
-        title="Mover arriba"
-      >
-        ↑
-      </button>
-      <button 
-        className="button action-button"
-        onClick={() => onAction?.("down", item)}
-        title="Mover abajo"
-      >
-        ↓
-      </button>
-      <button 
-        className="delete-btn"
-        onClick={() => onAction?.("delete", item)}
-        title="Eliminar"
-      >
-        🗑️
-      </button>
-    </td>
-  );
+  const renderActions = (item: T, index: number) => {
+    // Just render the container, TableAnimation will fill it with buttons
+    return (
+      <td className="table-actions">
+        {/* TableAnimation will populate this */}
+      </td>
+    );
+  };
 
   return (
     <div className="table-wrapper">
@@ -110,7 +93,7 @@ export function DynamicTable<T>({
       >
         <thead>
           <tr>
-            {withActions && actionPosition === "start" && <th>Acciones</th>}
+            {withActions && actionPosition === "start" && <th style={{ width: '130px' }}>Acciones</th>}
             {displayColumns.map((col) => (
               <th
                 key={col.key}
@@ -122,7 +105,7 @@ export function DynamicTable<T>({
                 {col.title}
               </th>
             ))}
-            {withActions && actionPosition === "end" && <th>Acciones</th>}
+            {withActions && actionPosition === "end" && <th style={{ width: '130px' }}>Acciones</th>}
           </tr>
         </thead>
         <tbody>
@@ -133,8 +116,14 @@ export function DynamicTable<T>({
                   .slice(0, Object.keys(groupedData).indexOf(groupKey))
                   .flat().length + idx;
                 
+                // Create a unique key for each row - use multiple properties for uniqueness
+                const itemId = (item as any)?.id || (item as any)?.name || idx;
+                const uniqueKey = groupBy 
+                  ? `${groupKey}-${itemId}-${idx}` 
+                  : `item-${itemId}-${globalIndex}`;
+                
                 return (
-                  <tr key={idx} data-property-index={groupKey}>
+                  <tr key={uniqueKey} data-property-index={groupKey}>
                     {withActions && actionPosition === "start" && renderActions(item, globalIndex)}
                     {groupBy && idx === 0 && (
                       <td 

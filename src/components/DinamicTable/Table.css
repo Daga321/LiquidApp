@@ -26,6 +26,10 @@
 
 .table-actions {
     white-space: nowrap;
+    text-align: center;
+    width: 80px; /* Más compacta, solo el espacio necesario */
+    min-width: 80px;
+    max-width: 80px;
 }
 
 .table-actions button {
@@ -38,7 +42,16 @@
     margin: 0 2px;
 }
 
+.table-actions .wide-button {
+    width: 70px; /* Ocupa el espacio de dos botones cuando es el único botón de movimiento */
+    text-align: center;
+}
+
 .table-actions button:hover {
+    background-color: var(--green-soft);
+}
+
+.table-actions .wide-button:hover {
     background-color: var(--green-soft);
 }
 
@@ -49,4 +62,11 @@
 
 .table-actions .delete-btn:hover {
     background-color: var(--color-danger-hover);
+}
+
+.table-actions .action-spacer {
+    display: inline-block;
+    width: 34px; /* Same width as action buttons */
+    height: 28px; /* Same height as action buttons */
+    margin: 0 2px;
 }

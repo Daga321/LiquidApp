@@ -57,7 +57,7 @@ export function DynamicTableExample() {
     }
   };
 
-  const renderRow = (item: ExampleItem, skipGroupColumn?: boolean) => (
+  const renderRow = (item: ExampleItem) => (
     <>
       <td style={{ textAlign: "center" }}>{item.id}</td>
       <td>{item.name}</td>
