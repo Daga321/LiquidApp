@@ -36,7 +36,10 @@ export class PropertiesValidation extends ValidationBase {
     }
 
     // Validate liquidation method
-    if (!data.liquidationMethod || !this.validateRequired(data.liquidationMethod.Key, 'liquidationMethod', 'Debe seleccionar un método de liquidación')) {
+    if (!data.liquidationMethod) {
+      this.addError('liquidationMethod', 'Debe seleccionar un método de liquidación');
+      isValid = false;
+    } else if (!this.validateRequired(data.liquidationMethod.Key, 'liquidationMethod', 'Debe seleccionar un método de liquidación')) {
       isValid = false;
     }
 
@@ -47,30 +50,50 @@ export class PropertiesValidation extends ValidationBase {
   /**
    * Validates the complete properties table with their values
    * @param {Array} properties - Array of properties
-   * @param {boolean} isMultipleMeter - If it's multiple meter
+   * @param {boolean} isSingleMeter - If it's single meter
    * @returns {Object} Validation result
    */
-  validatePropertiesTable(properties: IPropertyValidation[], isMultipleMeter: boolean = false): IValidationResult {
+  validatePropertiesTable(properties: IPropertyValidation[], isSingleMeter: boolean = false): IValidationResult {
     this.clearErrors();
     let isValid = properties.length > 0;
     let percentageTotal = 0;
 
     const percentageProperties = properties.filter((p: IPropertyValidation) => p.method === 'PERCENTAGE');
+    const consumptionProperties = properties.filter((p: IPropertyValidation) => p.method === 'CONSUMPTION');
     const peopleProperties = properties.filter((p: IPropertyValidation) => p.method === 'PEOPLE');
+    const nonPercentageProperties = [...consumptionProperties, ...peopleProperties];
 
-    if (isMultipleMeter) {
-      // For multiple meter, validate that all values are >= 1
+    if (!isSingleMeter) {
+      // For multiple meter (consumption), validate that all values are >= 1 and integers
       properties.forEach((property: IPropertyValidation, index: number) => {
-        if (!this.validateMinNumber(property.baseValue, `property_${index}_value`, 1, 'Debe ser mayor o igual a 1')) {
+        const value = parseFloat(property.baseValue.toString());
+        
+        if (isNaN(value) || value < 1 || !Number.isInteger(value)) {
+          this.addError(`property_${index}_value`, 'Debe ser un número entero mayor o igual a 1');
           isValid = false;
         }
       });
     } else {
       // For single meter, validate by method
 
+      // Validate properties with consumption method
+      consumptionProperties.forEach((property: IPropertyValidation, index: number) => {
+        const value = parseFloat(property.baseValue.toString());
+        const propertyIndex = properties.indexOf(property);
+        
+        if (isNaN(value) || value < 1 || !Number.isInteger(value)) {
+          this.addError(`property_${propertyIndex}_value`, 'Debe ser un número entero mayor a 0');
+          isValid = false;
+        }
+      });
+
       // Validate properties with people method
       peopleProperties.forEach((property: IPropertyValidation, index: number) => {
-        if (!this.validateMinNumber(property.baseValue, `people_${index}_value`, 1, 'Debe ser mayor o igual a 1')) {
+        const value = parseFloat(property.baseValue.toString());
+        const propertyIndex = properties.indexOf(property);
+        
+        if (isNaN(value) || value < 1 || !Number.isInteger(value)) {
+          this.addError(`property_${propertyIndex}_value`, 'Debe ser un número entero mayor a 0');
           isValid = false;
         }
       });
@@ -78,30 +101,36 @@ export class PropertiesValidation extends ValidationBase {
       // Validate properties with percentage method
       percentageProperties.forEach((property: IPropertyValidation, index: number) => {
         const value = parseFloat(property.baseValue.toString());
+        const propertyIndex = properties.indexOf(property);
         
-        if (isNaN(value) || value < 1 || value > 100) {
-          this.addError(`percentage_${index}_value`, 'Debe ser un porcentaje entre 1 y 100');
+        if (isNaN(value) || value < 1 || value > 100 || !Number.isInteger(value)) {
+          this.addError(`property_${propertyIndex}_value`, 'Debe ser un número entero entre 1 y 100');
           isValid = false;
         } else {
           percentageTotal += value;
-          this.addError(`percentage_${index}_value`, '');
         }
       });
 
-      // Validate percentage sum
+      // Validate percentage sum rules
       if (percentageProperties.length > 0) {
-        if (peopleProperties.length === 0 && percentageTotal !== 100) {
-          isValid = false;
-          percentageProperties.forEach((property: IPropertyValidation, index: number) => {
-            this.addError(`percentage_${index}_value`, 'El total debe sumar exactamente 100% si no hay otros métodos');
-          });
-        }
-
-        if (peopleProperties.length > 0 && (percentageTotal <= 0 || percentageTotal >= 100)) {
-          isValid = false;
-          percentageProperties.forEach((property: IPropertyValidation, index: number) => {
-            this.addError(`percentage_${index}_value`, 'El total de porcentajes debe ser mayor a 0% y menor a 100% si hay otros métodos');
-          });
+        if (nonPercentageProperties.length === 0) {
+          // Only percentage methods - must sum exactly 100%
+          if (percentageTotal !== 100) {
+            isValid = false;
+            percentageProperties.forEach((property: IPropertyValidation) => {
+              const propertyIndex = properties.indexOf(property);
+              this.addError(`property_${propertyIndex}_value`, 'El total debe sumar exactamente 100% si no hay otros métodos');
+            });
+          }
+        } else {
+          // Mixed methods - percentage sum must be > 0 and < 100
+          if (percentageTotal <= 0 || percentageTotal >= 100) {
+            isValid = false;
+            percentageProperties.forEach((property: IPropertyValidation) => {
+              const propertyIndex = properties.indexOf(property);
+              this.addError(`property_${propertyIndex}_value`, 'El total de porcentajes debe ser mayor a 0% y menor a 100% si hay otros métodos');
+            });
+          }
         }
       }
     }

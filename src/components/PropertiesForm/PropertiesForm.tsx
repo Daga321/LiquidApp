@@ -39,39 +39,39 @@ export function PropertiesForm({
 
             {formData.liquidationMethod?.Key !== LiquidationMethodEnum.CONSUMPTION.Key && (
                 <div className="form-group">
-                <label>Método de liquidación</label>
-                <div className="radio-group">
-                    <label>
-                        <input 
-                            type="radio" 
-                            name="method" 
-                            value={LiquidationMethodEnum.PERCENTAGE.Key}
-                            checked={formData.liquidationMethod?.Key === LiquidationMethodEnum.PERCENTAGE.Key}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                const selectedKey = e.target.value;
-                                const selectedMethod = Object.values(LiquidationMethodEnum).find(method => method.Key === selectedKey);
-                                onFormDataChange("liquidationMethod", selectedMethod || LiquidationMethodEnum.PERCENTAGE);
-                            }}
-                        /> 
-                        {LiquidationMethodEnum.PERCENTAGE.Method}
-                    </label>
-                    <label>
-                        <input 
-                            type="radio" 
-                            name="method" 
-                            value={LiquidationMethodEnum.PEOPLE.Key}
-                            checked={formData.liquidationMethod?.Key === LiquidationMethodEnum.PEOPLE.Key}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                const selectedKey = e.target.value;
-                                const selectedMethod = Object.values(LiquidationMethodEnum).find(method => method.Key === selectedKey);
-                                onFormDataChange("liquidationMethod", selectedMethod || LiquidationMethodEnum.PEOPLE);
-                            }}
-                        /> 
-                        {LiquidationMethodEnum.PEOPLE.Method}
-                    </label>
+                    <label>Método de liquidación</label>
+                    <div className="radio-group">
+                        <label>
+                            <input 
+                                type="radio" 
+                                name="method" 
+                                value={LiquidationMethodEnum.PERCENTAGE.Key}
+                                checked={formData.liquidationMethod?.Key === LiquidationMethodEnum.PERCENTAGE.Key}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                    const selectedKey = e.target.value;
+                                    const selectedMethod = Object.values(LiquidationMethodEnum).find(method => method.Key === selectedKey);
+                                    onFormDataChange("liquidationMethod", selectedMethod || LiquidationMethodEnum.PERCENTAGE);
+                                }}
+                            /> 
+                            {LiquidationMethodEnum.PERCENTAGE.Method}
+                        </label>
+                        <label>
+                            <input 
+                                type="radio" 
+                                name="method" 
+                                value={LiquidationMethodEnum.PEOPLE.Key}
+                                checked={formData.liquidationMethod?.Key === LiquidationMethodEnum.PEOPLE.Key}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                    const selectedKey = e.target.value;
+                                    const selectedMethod = Object.values(LiquidationMethodEnum).find(method => method.Key === selectedKey);
+                                    onFormDataChange("liquidationMethod", selectedMethod || LiquidationMethodEnum.PEOPLE);
+                                }}
+                            /> 
+                            {LiquidationMethodEnum.PEOPLE.Method}
+                        </label>
+                    </div>
+                    <ErrorMessage error={errors.liquidationMethod} />
                 </div>
-                <ErrorMessage error={errors.liquidationMethod} />
-            </div>
             )}
 
             <div className="form-group">
