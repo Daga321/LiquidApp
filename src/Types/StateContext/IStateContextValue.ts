@@ -17,7 +17,7 @@ export interface IStateContextValue {
     updateProperty: (propertyIndex: number, field: keyof IProperty, value: any) => void;
     
     // Adjustment management
-    addAdjustment: (propertyIndex: number, adjustment: Partial<IAdjustment>) => void;
+    addAdjustment: (propertyIndex: number, adjustment: IAdjustment) => void;
     removeAdjustment: (propertyIndex: number, adjustmentIndex: number) => void;
     updateAdjustment: (propertyIndex: number, adjustmentIndex: number, field: keyof IAdjustment, value: any) => void;
     

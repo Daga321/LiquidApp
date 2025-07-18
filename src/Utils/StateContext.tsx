@@ -79,7 +79,7 @@ export const StateProvider = ({ children }: IStateProviderProps) => {
     };
 
     // Helper functions for managing adjustments
-    const addAdjustment = (propertyIndex: number, adjustment: Partial<IAdjustment>): void => {
+    const addAdjustment = (propertyIndex: number, adjustment: IAdjustment): void => {
         setData((prev: IAppState) => ({
             ...prev,
             properties: prev.properties.map((prop: IProperty, index: number) =>
@@ -88,11 +88,7 @@ export const StateProvider = ({ children }: IStateProviderProps) => {
                         ...prop,
                         adjustmentsList: [
                             ...prop.adjustmentsList,
-                            {
-                                note: adjustment.note || "",
-                                value: adjustment.value || 0,
-                                type: adjustment.type || {} as IAdjustmentType
-                            }
+                            adjustment
                         ]
                     }
                     : prop

@@ -127,3 +127,28 @@ button.button:disabled {
         transform: scale(0.95);
     }
 }
+
+/* Form validation error styles */
+/* input.error,
+select.error {
+    border-color: var(--color-danger);
+    background-color: rgba(244, 67, 54, 0.05);
+    box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.1);
+}
+
+input.error:focus,
+select.error:focus {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.2);
+}
+
+.error-message {
+    color: var(--color-danger);
+    font-size: 0.8rem;
+    margin-top: 4px;
+    display: block;
+}
+
+.form-group.error {
+    margin-bottom: 1.5rem;
+} */

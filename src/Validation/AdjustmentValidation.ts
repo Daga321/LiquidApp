@@ -89,7 +89,7 @@ export class AdjustmentValidation extends ValidationBase {
 
   /**
    * Validates the adjustment type
-   * @param {string} adjustmentType - Adjustment type (CHARGE or DISCOUNT)
+   * @param {string} adjustmentType - Adjustment type (EXTRA_CHARGE or DISCOUNT)
    * @returns {Object}
    */
   validateAdjustmentType(adjustmentType: string): IValidationResult {
@@ -100,7 +100,7 @@ export class AdjustmentValidation extends ValidationBase {
       isValid = false;
     } else {
       // Validate that it's one of the allowed values
-      const validTypes = ['CHARGE', 'DISCOUNT'];
+      const validTypes = ['EXTRA_CHARGE', 'DISCOUNT'];
       if (!validTypes.includes(adjustmentType)) {
         this.addError('adjustmentType', 'Tipo de ajuste inválido');
         isValid = false;
