@@ -7,9 +7,9 @@ export function AdjustmentTable({ selectedPropertyId }: IAdjustmentTableProps) {
     const { data } = useStateContext();
 
     const columns: ColumnDefinition[] = [
-        { key: "property", title: "Propiedad", width: "200px" },
+        // { key: "property", title: "Propiedad", width: "200px" },
         { key: "details", title: "Concepto", width: "auto" },
-        { key: "type", title: "Tipo", width: "150px" },
+        // { key: "type", title: "Tipo", width: "150px" },
         { key: "value", title: "Valor", width: "150px" }
     ];
 
@@ -61,12 +61,14 @@ export function AdjustmentTable({ selectedPropertyId }: IAdjustmentTableProps) {
                 data={getAdjustmentsData()}
                 renderRow={(item: any) => (
                     <>
-                        <td>{item.property}</td>
+                        {/* <td>{item.property}</td> */}
                         <td>{item.details}</td>
-                        <td>{item.type}</td>
+                        {/* <td>{item.type}</td> */}
                         <td style={{ textAlign: "right" }}>{item.value}</td>
                     </>
                 )}
+                withActions={true}
+                actionPosition="end"
             />
 
         </div>

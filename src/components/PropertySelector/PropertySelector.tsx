@@ -1,4 +1,5 @@
 import { IPropertySelectorProps } from "../../Types/Componets/IPropertySelectorProps";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 
 /**
  * PropertySelector Component
@@ -9,6 +10,7 @@ export function PropertySelector({
     selectedPropertyId, 
     onPropertyChange, 
     disabled = false,
+    errors,
     includeAllOption = false
 }: IPropertySelectorProps) {
     return (
@@ -31,6 +33,7 @@ export function PropertySelector({
                     <option value="all">Todas las propiedades</option>
                 )}
             </select>
+            <ErrorMessage error={errors.selectedPropertyId} />
         </div>
     );
 }

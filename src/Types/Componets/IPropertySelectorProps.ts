@@ -8,5 +8,6 @@ export interface IPropertySelectorProps {
     selectedPropertyId: string;
     onPropertyChange: (propertyId: string) => void;
     disabled?: boolean;
+    errors: Record<string, string>;
     includeAllOption?: boolean;
 }
