@@ -8,7 +8,7 @@ import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 export function PropertySelector({ 
     properties, 
     selectedPropertyId, 
-    onPropertyChange, 
+    onPropertyChange,
     disabled = false,
     errors,
     includeAllOption = false

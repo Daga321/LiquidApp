@@ -126,6 +126,25 @@ export const StateProvider = ({ children }: IStateProviderProps) => {
         }));
     };
 
+    const moveAdjustment = (propertyIndex: number, fromIndex: number, toIndex: number): void => {
+        setData((prev: IAppState) => ({
+            ...prev,
+            properties: prev.properties.map((prop: IProperty, index: number) =>
+                index === propertyIndex
+                    ? {
+                        ...prop,
+                        adjustmentsList: (() => {
+                            const newList = [...prop.adjustmentsList];
+                            const [moved] = newList.splice(fromIndex, 1);
+                            newList.splice(toIndex, 0, moved);
+                            return newList;
+                        })()
+                    }
+                    : prop
+            )
+        }));
+    };
+
     // Helper function to update invoice data
     const updateInvoice = (field: keyof IInvoice, value: any): void => {
         setData((prev: IAppState) => ({
@@ -161,6 +180,7 @@ export const StateProvider = ({ children }: IStateProviderProps) => {
         addAdjustment,
         removeAdjustment,
         updateAdjustment,
+        moveAdjustment,
         // Invoice management
         updateInvoice: updateInvoice,
     };

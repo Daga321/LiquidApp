@@ -23,10 +23,10 @@ export class AdjustmentValidation extends ValidationBase {
     let isValid = true;
 
     // Validate property selection first (similar to service selection in GeneralDataForm)
-    if (data.selectedPropertyId === "") {
+    if (!data.applyToAll && data.selectedPropertyId === "") {
         this.addError('selectedPropertyId', 'Por favor seleccione una propiedad');
         isValid = false;
-      }
+    }
 
     // Validate adjustment name/concept
     if (!this.validateRequired(data.adjustmentName, 'adjustmentName', 'El concepto del ajuste es requerido')) {

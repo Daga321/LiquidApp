@@ -39,10 +39,10 @@ export function Adjustment() {
 
     // Get existing adjustments for validation
     const getExistingAdjustments = () => {
-        if (applyToAll) {
+        if (applyToAll || selectedPropertyId === "all") {
             // Return all adjustments from all properties
             return data.properties.flatMap(property => property.adjustmentsList);
-        } else if (selectedPropertyId) {
+        } else if (selectedPropertyId && selectedPropertyId !== "") {
             // Return adjustments from selected property
             const propertyIndex = parseInt(selectedPropertyId);
             if (propertyIndex >= 0 && propertyIndex < data.properties.length) {
@@ -79,7 +79,7 @@ export function Adjustment() {
                 : { Key: "EXTRA_CHARGE", Value: "Cargo adicional" }
         };
 
-        if (applyToAll) {
+        if (applyToAll || selectedPropertyId === "all") {
             // Apply to all properties
             data.properties.forEach((_, index) => {
                 addAdjustment(index, adjustment);
@@ -101,6 +101,7 @@ export function Adjustment() {
 
     const handlePropertyChange = (propertyId: string) => {
         setSelectedPropertyId(propertyId);
+        setApplyToAll(propertyId === "all");
     };
 
     return (
@@ -110,7 +111,7 @@ export function Adjustment() {
                 properties={data.properties}
                 selectedPropertyId={selectedPropertyId}
                 onPropertyChange={handlePropertyChange}
-                disabled={applyToAll}
+                disabled={false}
                 errors={validationResult.errors}
                 includeAllOption={true}
             />

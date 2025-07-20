@@ -20,6 +20,7 @@ export interface IStateContextValue {
     addAdjustment: (propertyIndex: number, adjustment: IAdjustment) => void;
     removeAdjustment: (propertyIndex: number, adjustmentIndex: number) => void;
     updateAdjustment: (propertyIndex: number, adjustmentIndex: number, field: keyof IAdjustment, value: any) => void;
+    moveAdjustment: (propertyIndex: number, fromIndex: number, toIndex: number) => void;
     
     // Invoice management
     updateInvoice: (field: keyof IInvoice, value: any) => void;
