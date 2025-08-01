@@ -8,7 +8,7 @@ import { CurrentStepRef, ViewsConfig } from './Types/Componets/StepperTypes';
 import { GeneralData } from './containers/GeneralData/GeneralData';
 import { Properties } from './containers/Properties/Properties';
 import { Adjustment } from './containers/Adjustment/Adjustment'
-// import { Results } from './containers/Results/Results';
+import { Results } from './containers/Results/Results';
 
 // Module variable to handle current step and setter for external access
 let currentStepRef: CurrentStepRef = { value: 0, setter: null }; 
@@ -18,7 +18,7 @@ const views: ViewsConfig = {
     "Datos generales": <GeneralData />,
     "Propiedades": <Properties />,
     "Ajustes": <Adjustment />,
-    // "Resultados": <Results />
+    "Resultados": <Results />
 }
 
 function getView(currentStep: number) {

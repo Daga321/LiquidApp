@@ -1,0 +1,62 @@
+/* Results Table Specific Styles */
+
+.adjustment-discount {
+    color: #28a745; /* Green for discounts */
+    font-weight: 500;
+}
+
+.adjustment-charge {
+    color: #dc3545; /* Red for extra charges */
+    font-weight: 500;
+}
+
+.adjustment-neutral {
+    color: #6c757d; /* Gray for zero adjustments */
+    font-weight: 400;
+}
+
+/* Value color classes */
+.amount-debt {
+    color: #dc3545; /* Red for amounts owed (debt) */
+}
+
+.amount-credit {
+    color: #28a745; /* Green for credit/favorable balance */
+}
+
+.amount-zero {
+    color: #000000; /* Black for zero values */
+}
+
+/* Results table total column styling */
+.results-table td:last-child {
+    font-weight: bold;
+    border-left: 2px solid var(--primary-color, #007bff);
+}
+
+/* Total row styling */
+.total-row {
+    background-color: var(--secondary-bg-color, #f8f9fa);
+    border-top: 2px solid var(--primary-color, #007bff);
+    font-weight: bold;
+}
+
+.total-row td {
+    padding: 12px 8px;
+    border-bottom: 2px solid var(--primary-color, #007bff);
+}
+
+/* Responsive adjustments for results table */
+@media (max-width: 768px) {
+    .results-table {
+        font-size: 0.875rem;
+    }
+    
+    .results-table td {
+        padding: 0.5rem 0.25rem;
+    }
+    
+    .total-row td {
+        padding: 10px 6px;
+    }
+}
