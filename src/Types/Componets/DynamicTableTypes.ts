@@ -10,11 +10,12 @@ export interface ColumnDefinition {
 export interface DynamicTableProps<T> {
   data: T[];
   columns: ColumnDefinition[];
-  renderRow: (item: T, skipGroupColumn?: boolean) => React.ReactNode;
+  renderRow: (item: T, skipGroupColumn?: boolean) => React.ReactNode | React.ReactNode[];
   withActions?: boolean;
   onAction?: (action: "up" | "down" | "delete" | "edit", item: T) => void;
   groupBy?: keyof T;
   actionPosition?: "start" | "end";
+  allowMultipleRows?: boolean; // Nueva prop - mutuamente excluyente con groupBy
 }
 
 // Types for table animations

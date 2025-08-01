@@ -12,30 +12,33 @@ export function DynamicTable<T>({
   onAction,
   groupBy,
   actionPosition = "end",
+  allowMultipleRows = false,
 }: DynamicTableProps<T>) {
   const tableRef = useRef<HTMLTableElement>(null);
   const tableId = useRef(`dynamic-table-${Math.random().toString(36).substr(2, 9)}`);
 
-  // Agrupamiento de datos (si corresponde)
+  // Determine which mode to use - groupBy takes precedence over allowMultipleRows
+  const useGrouping = !!groupBy;
+  const useMultipleRows = !useGrouping && allowMultipleRows;
   const groupedData = useMemo(() => {
-    if (!groupBy) return { all: data };
+    if (!useGrouping) return { all: data };
     return data.reduce<Record<string, T[]>>((acc, item) => {
       const key = String(item[groupBy] ?? "undefined");
       if (!acc[key]) acc[key] = [];
       acc[key].push(item);
       return acc;
     }, {});
-  }, [data, groupBy]);
+  }, [data, groupBy, useGrouping]);
 
   // Reorganize columns when grouping - put groupBy column first
   const displayColumns = useMemo(() => {
-    if (!groupBy) return columns;
+    if (!useGrouping) return columns;
     
     const groupColumn = columns.find(col => col.key === groupBy);
     const otherColumns = columns.filter(col => col.key !== groupBy);
     
     return groupColumn ? [groupColumn, ...otherColumns] : columns;
-  }, [columns, groupBy]);
+  }, [columns, groupBy, useGrouping]);
 
   // Handle move actions
   const handleMove = (fromIndex: number, toIndex: number) => {
@@ -109,40 +112,72 @@ export function DynamicTable<T>({
           </tr>
         </thead>
         <tbody>
-          {Object.entries(groupedData).map(([groupKey, items]) => (
-            <Fragment key={groupKey}>
-              {items.map((item, idx) => {
-                const globalIndex = Object.values(groupedData)
-                  .slice(0, Object.keys(groupedData).indexOf(groupKey))
-                  .flat().length + idx;
-                
-                // Create a unique key for each row - use multiple properties for uniqueness
-                const itemId = (item as any)?.id || (item as any)?.name || idx;
-                const uniqueKey = groupBy 
-                  ? `${groupKey}-${itemId}-${idx}` 
-                  : `item-${itemId}-${globalIndex}`;
+          {useGrouping ? (
+            // Existing grouping logic
+            Object.entries(groupedData).map(([groupKey, items]) => (
+              <Fragment key={groupKey}>
+                {items.map((item, idx) => {
+                  const globalIndex = Object.values(groupedData)
+                    .slice(0, Object.keys(groupedData).indexOf(groupKey))
+                    .flat().length + idx;
+                  
+                  // Create a unique key for each row - use multiple properties for uniqueness
+                  const itemId = (item as any)?.id || (item as any)?.name || idx;
+                  const uniqueKey = `${groupKey}-${itemId}-${idx}`;
+                  
+                  return (
+                    <tr key={uniqueKey} data-property-index={groupKey}>
+                      {withActions && actionPosition === "start" && renderActions(item, globalIndex)}
+                      {idx === 0 && (
+                        <td 
+                          rowSpan={items.length} 
+                          style={{ 
+                            textAlign: displayColumns[0]?.align || "left",
+                            verticalAlign: "top"
+                          }}
+                        >
+                          {groupKey}
+                        </td>
+                      )}
+                      {renderRow(item, true)}
+                      {withActions && actionPosition === "end" && renderActions(item, globalIndex)}
+                    </tr>
+                  );
+                })}
+              </Fragment>
+            ))
+          ) : (
+            // New logic for multiple rows or single rows
+            data.map((item, index) => {
+              const itemId = (item as any)?.id || (item as any)?.name || index;
+              const uniqueKey = `item-${itemId}-${index}`;
+              
+              if (useMultipleRows) {
+                // Handle multiple rows per item
+                const renderedRows = renderRow(item, false);
+                const rowsArray = Array.isArray(renderedRows) ? renderedRows : [renderedRows];
                 
                 return (
-                  <tr key={uniqueKey} data-property-index={groupKey}>
-                    {withActions && actionPosition === "start" && renderActions(item, globalIndex)}
-                    {groupBy && idx === 0 && (
-                      <td 
-                        rowSpan={items.length} 
-                        style={{ 
-                          textAlign: displayColumns[0]?.align || "left",
-                          verticalAlign: "top"
-                        }}
-                      >
-                        {groupKey}
-                      </td>
-                    )}
-                    {renderRow(item, !!groupBy)}
-                    {withActions && actionPosition === "end" && renderActions(item, globalIndex)}
+                  <Fragment key={uniqueKey}>
+                    {rowsArray.map((row, rowIndex) => (
+                      <Fragment key={`${uniqueKey}-row-${rowIndex}`}>
+                        {row}
+                      </Fragment>
+                    ))}
+                  </Fragment>
+                );
+              } else {
+                // Standard single row
+                return (
+                  <tr key={uniqueKey}>
+                    {withActions && actionPosition === "start" && renderActions(item, index)}
+                    {renderRow(item, false)}
+                    {withActions && actionPosition === "end" && renderActions(item, index)}
                   </tr>
                 );
-              })}
-            </Fragment>
-          ))}
+              }
+            })
+          )}
           {Object.values(groupedData).flat().length === 0 && (
             <tr className="empty-row">
               <td colSpan={displayColumns.length + (withActions ? 1 : 0)}>

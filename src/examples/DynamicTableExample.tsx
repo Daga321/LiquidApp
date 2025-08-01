@@ -8,6 +8,7 @@ interface ExampleItem {
   name: string;
   value: number;
   category: string;
+  details?: string[]; // For multiple rows example
 }
 
 export function DynamicTableExample() {
@@ -16,6 +17,30 @@ export function DynamicTableExample() {
     { id: 2, name: "Item 2", value: 200, category: "A" },
     { id: 3, name: "Item 3", value: 300, category: "B" },
     { id: 4, name: "Item 4", value: 400, category: "B" },
+  ]);
+
+  const [multiRowData, setMultiRowData] = useState<ExampleItem[]>([
+    { 
+      id: 1, 
+      name: "Producto A", 
+      value: 150, 
+      category: "Electronics",
+      details: ["Descuento por volumen: -$20", "Cargo por envío: +$15"]
+    },
+    { 
+      id: 2, 
+      name: "Producto B", 
+      value: 250, 
+      category: "Books",
+      details: ["Descuento estudiante: -$30"]
+    },
+    { 
+      id: 3, 
+      name: "Producto C", 
+      value: 180, 
+      category: "Electronics"
+      // No details - should show only main row
+    }
   ]);
 
   const columns: ColumnDefinition[] = [
@@ -77,6 +102,47 @@ export function DynamicTableExample() {
     </>
   );
 
+  // Render row function for multiple rows example
+  const renderMultipleRows = (item: ExampleItem) => {
+    const rows = [];
+    
+    // Main row
+    const mainRow = (
+      <tr key={`main-${item.id}`}>
+        <td style={{ textAlign: "center" }}>{item.id}</td>
+        <td>{item.name}</td>
+        <td style={{ textAlign: "right" }}>${item.value}</td>
+        <td style={{ textAlign: "center" }}>{item.category}</td>
+      </tr>
+    );
+    
+    rows.push(mainRow);
+    
+    // Details row (if any)
+    if (item.details && item.details.length > 0) {
+      const detailsRow = (
+        <tr key={`details-${item.id}`} style={{ backgroundColor: "#f8f9fa" }}>
+          <td colSpan={4} style={{ padding: "8px 16px", borderTop: "1px solid #dee2e6" }}>
+            <div>
+              {item.details.map((detail, index) => (
+                <div key={index} style={{ 
+                  fontSize: "0.9em",
+                  marginBottom: index < item.details!.length - 1 ? "4px" : "0",
+                  color: detail.includes('+') ? "#dc3545" : "#28a745"
+                }}>
+                  • {detail}
+                </div>
+              ))}
+            </div>
+          </td>
+        </tr>
+      );
+      rows.push(detailsRow);
+    }
+    
+    return rows;
+  };
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>Dynamic Table Example</h1>
@@ -100,6 +166,19 @@ export function DynamicTableExample() {
         onAction={handleAction}
         groupBy="category"
         actionPosition="end"
+      />
+
+      <h2>Multiple Rows Example</h2>
+      <p style={{ marginBottom: "10px", fontSize: "14px", color: "#666" }}>
+        Esta tabla demuestra la funcionalidad de múltiples filas. Cada producto puede tener detalles adicionales 
+        que se muestran en una fila expandida debajo.
+      </p>
+      <DynamicTable
+        data={multiRowData}
+        columns={columns}
+        renderRow={renderMultipleRows}
+        withActions={false}
+        allowMultipleRows={true}
       />
     </div>
   );
