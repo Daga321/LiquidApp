@@ -17,15 +17,55 @@
 
 /* Value color classes */
 .amount-debt {
-    color: #dc3545; /* Red for amounts owed (debt) */
+    color: var(--color-danger); /* Red for amounts owed (debt) */
 }
 
 .amount-credit {
-    color: #28a745; /* Green for credit/favorable balance */
+    color: var(--color-success); /* Green for credit/favorable balance */
 }
 
 .amount-zero {
-    color: #000000; /* Black for zero values */
+    color: var(--text-main); /* Main text color for zero values */
+}
+
+/* Adjustment details row styling */
+.adjustment-details-row td {
+    border-top: 1px solid var(--border-main) !important;
+    background-color: transparent !important;
+    padding: 12px 16px !important;
+}
+
+.adjustment-line {
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+    margin-bottom: 6px;
+    padding: 4px 0;
+    width: 100%;
+    line-height: 1.2;
+}
+
+.adjustment-line:last-child {
+    margin-bottom: 0;
+}
+
+.adjustment-description {
+    color: var(--text-main);
+    white-space: nowrap;
+}
+
+.adjustment-dots {
+    color: var(--text-main);
+    font-weight: 300;
+    letter-spacing: 1px;
+    user-select: none;
+}
+
+.adjustment-value {
+    font-weight: 600;
+    font-size: 0.95em;
+    white-space: nowrap;
+    margin-left: auto; /* Empuja el valor hacia la derecha */
 }
 
 /* Results table total column styling */

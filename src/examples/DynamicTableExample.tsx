@@ -25,14 +25,14 @@ export function DynamicTableExample() {
       name: "Producto A", 
       value: 150, 
       category: "Electronics",
-      details: ["Descuento por volumen: -$20", "Cargo por envío: +$15"]
+      details: ["Descuento por volumen: -$20.00", "Cargo por envío: +$15.00"]
     },
     { 
       id: 2, 
       name: "Producto B", 
       value: 250, 
       category: "Books",
-      details: ["Descuento estudiante: -$30"]
+      details: ["Descuento estudiante: -$30.00"]
     },
     { 
       id: 3, 
@@ -40,6 +40,13 @@ export function DynamicTableExample() {
       value: 180, 
       category: "Electronics"
       // No details - should show only main row
+    },
+    { 
+      id: 4, 
+      name: "Producto D", 
+      value: 320, 
+      category: "Clothes",
+      details: ["Cargo por importación: +$45.00", "Descuento fidelidad: -$25.00", "Seguro: +$12.50"]
     }
   ]);
 
@@ -121,16 +128,24 @@ export function DynamicTableExample() {
     // Details row (if any)
     if (item.details && item.details.length > 0) {
       const detailsRow = (
-        <tr key={`details-${item.id}`} style={{ backgroundColor: "#f8f9fa" }}>
-          <td colSpan={4} style={{ padding: "8px 16px", borderTop: "1px solid #dee2e6" }}>
+        <tr key={`details-${item.id}`} style={{ backgroundColor: "var(--gray-light)" }}>
+          <td colSpan={4} style={{ padding: "8px 16px", borderTop: "1px solid var(--gray-medium)" }}>
             <div>
               {item.details.map((detail, index) => (
                 <div key={index} style={{ 
                   fontSize: "0.9em",
                   marginBottom: index < item.details!.length - 1 ? "4px" : "0",
-                  color: detail.includes('+') ? "#dc3545" : "#28a745"
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center"
                 }}>
-                  • {detail}
+                  <span>{detail.split(':')[0]}:</span>
+                  <span style={{ 
+                    color: detail.includes('+') ? "var(--color-danger)" : "var(--color-success)",
+                    fontWeight: "500"
+                  }}>
+                    {detail.split(':')[1]?.trim()}
+                  </span>
                 </div>
               ))}
             </div>
