@@ -1,5 +1,5 @@
 import { ColumnDefinition, ActionType } from "../../Types/Componets/DynamicTableTypes";
-import { DynamicTable } from "../DinamicTable/DynamicTable";
+import { DynamicTable } from "../DynamicTable/DynamicTable";
 import { useStateContext } from "../../Utils/StateContext";
 import { IAdjustmentTableProps } from "../../Types/Componets/IAdjustmentTableProps";
 import { AdjustmentTypeEnum } from "../../Models/Enums/AdjustmentTypeEnum";

@@ -1,7 +1,7 @@
 import { IProperty } from "@/Types/Models/Property";
 import { LiquidationMethodEnum } from "../../Models/Enums/LiquidationMethodEnum";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
-import { DynamicTable } from "../DinamicTable/DynamicTable";
+import { DynamicTable } from "../DynamicTable/DynamicTable";
 import { ColumnDefinition, ActionType } from "../../Types/Componets/DynamicTableTypes";
 
 interface PropertiesTableFormProps {

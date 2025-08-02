@@ -1,17 +1,17 @@
 import { useStateContext } from "../../Utils/StateContext.js";
 import { useLiquidation } from "../../Utils/useLiquidation.js";
 import { ResultsHeaderData } from "../../components/ResultsHeaderData/ResultsHeaderData.js";
-import { ResultsTable } from "@/components/ResultsTable/ResultsTable.js";
+import { ResultsTable } from "../../components/ResultsTable/ResultsTable.js";
 import { BackButton } from "../../components/Buttons/BackButton.js";
 import { ShareButton } from "../../components/Buttons/ShareButton.js";
-import { useMemo } from "react";
+import { useEffect } from "react";
 
-export function Results(): React.JSX.Element {
+export function Results() {
     const { data } = useStateContext();
     const { performLiquidation } = useLiquidation();
 
     // Calcula las liquidaciones solo cuando cambien los datos relevantes
-    useMemo(() => {
+    useEffect(() => {
         if (data.properties.length > 0) {
             performLiquidation();
         }

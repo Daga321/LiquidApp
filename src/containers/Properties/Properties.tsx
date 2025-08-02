@@ -9,7 +9,7 @@ import { IValidationResult } from "../../Types/Validation/ValidationBase";
 import { IProperty } from "../../Types/Models/Property";
 import { IPropertyFormData, IPropertyValidation } from "../../Types/Validation/PropertiesValidation";
 import { ActionType } from "../../Types/Componets/DynamicTableTypes";
-import LiquidationMethodEnum from "@/Models/Enums/LiquidationMethodEnum";
+import { LiquidationMethodEnum } from "../../Models/Enums/LiquidationMethodEnum";
 
 export function Properties(){
     const { data, addProperty, updateProperty, removeProperty, setData } = useStateContext();

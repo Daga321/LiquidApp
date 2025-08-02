@@ -1,7 +1,7 @@
 import * as ReactModule from "react";
 
 import { Header } from './components/Header/Header';
-import { Stepper } from './components/Steeper/Stepper';
+import { Stepper } from './components/Stepper/Stepper';
 import { LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner';
 import { CurrentStepRef, ViewsConfig } from './Types/Componets/StepperTypes';
 

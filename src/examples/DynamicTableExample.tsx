@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DynamicTable } from "../components/DinamicTable/DynamicTable";
+import { DynamicTable } from "../components/DynamicTable/DynamicTable";
 import { ColumnDefinition, ActionType } from "../Types/Componets/DynamicTableTypes";
 
 // Example data type

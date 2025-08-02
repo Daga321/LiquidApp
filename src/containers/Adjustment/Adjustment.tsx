@@ -3,7 +3,7 @@ import { useStateContext } from "../../Utils/StateContext.js";
 import { AdjustmentForm } from "../../components/AdjustmentForm/AdjustmentForm.tsx";
 import { NextButton } from "../../components/Buttons/NextButton.tsx";
 import { BackButton } from "../../components/Buttons/BackButton.tsx";
-import { AdjustmentTable } from "../../components/AdjustmentTable/AdjustementTable.tsx";
+import { AdjustmentTable } from "../../components/AdjustmentTable/AdjustmentTable.tsx";
 import { Message } from "../../components/Message/Message.tsx";
 import { PropertySelector } from "../../components/PropertySelector/PropertySelector.tsx";
 import { IAdjustment } from "../../Types/Models/Adjustment.js";
