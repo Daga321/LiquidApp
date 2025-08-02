@@ -1,0 +1,9 @@
+header {
+    padding: 1rem;
+    text-align: center;
+    color: var(--text-light);
+    background: var(--bg-header);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: var(--box-shadow-header);
+}

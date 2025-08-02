@@ -1,0 +1,155 @@
+/* Solo aplicar animaciones a las celdas de contenido, no a las de agrupación ni acciones */
+tr.moving td:not(.table-actions):not([rowspan]) {
+    position: relative;
+    z-index: 2;
+    transition: transform 1s ease, box-shadow 1s ease;
+}
+
+/* simulet origin row elevate */
+tr.to-up td:not(.table-actions):not([rowspan]) {
+    animation: elevate-down 1s forwards;
+}
+
+tr.to-down td:not(.table-actions):not([rowspan]) {
+    animation: elevate-up 1s forwards;
+}
+
+/* Mantener las celdas de agrupación y acciones estáticas */
+tr.moving .table-actions,
+tr.moving td[rowspan] {
+    position: relative;
+    z-index: 1;
+    transform: none !important; /* Asegurar que no se muevan */
+}
+
+@keyframes elevate-up {
+    0% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+
+    30% {
+        transform: translateY(20%) scale(1.02);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    60% {
+        transform: translateY(80%) scale(1.02);
+    }
+
+    100% {
+        transform: translateY(100%) scale(1);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
+@keyframes elevate-down {
+    0% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+
+    30% {
+        transform: translateY(-20%) scale(1.02);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    60% {
+        transform: translateY(-80%) scale(1.02);
+    }
+
+    100% {
+        transform: translateY(-100%) scale(1);
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
+/* Simulate destiny row sink */
+tr.from-up td:not(.table-actions):not([rowspan]) {
+    animation: sink-up 1s forwards;
+}
+
+tr.from-down td:not(.table-actions):not([rowspan]) {
+    animation: sink-down 1s forwards;
+}
+
+/* Mantener las celdas de agrupación y acciones estáticas para las filas de destino */
+tr.from-up .table-actions,
+tr.from-up td[rowspan],
+tr.from-down .table-actions,
+tr.from-down td[rowspan] {
+    position: relative;
+    z-index: 1;
+    transform: none !important; /* Asegurar que no se muevan */
+}
+
+@keyframes sink-up {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    30% {
+        transform: translateY(20%) scale(0.9);
+        opacity: 0.6;
+    }
+
+    60% {
+        transform: translateY(80%) scale(0.9);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translateY(100%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes sink-down {
+    0% {
+        transform: translateY(-0) scale(1);
+        opacity: 1;
+    }
+
+    30% {
+        transform: translateY(-20%) scale(0.9);
+        opacity: 0.6;
+    }
+
+    60% {
+        transform: translateY(-80%) scale(0.9);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translateY(-100%) scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* Animación de eliminación solo para celdas de contenido */
+tr.removing-zoom td:not(.table-actions):not([rowspan]) {
+    animation: zoom-fade-out 0.6s ease forwards;
+}
+
+/* Mantener las celdas de agrupación y acciones estáticas durante la eliminación */
+tr.removing-zoom .table-actions,
+tr.removing-zoom td[rowspan] {
+    position: relative;
+    z-index: 1;
+    transform: none !important; /* Asegurar que no se muevan */
+    opacity: 1 !important; /* Mantener visible */
+}
+
+@keyframes zoom-fade-out {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+}
