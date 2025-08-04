@@ -1,7 +1,7 @@
 import React from "react";
 import { LiquidationMethodEnum } from "../../Models/Enums/LiquidationMethodEnum";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
-import { IPropertiesFormProps } from "@/Types/Componets/IPropertiesFormProps";
+import { IPropertiesFormProps } from "../../../Types/components/IPropertiesFormProps";
 
 
 /**

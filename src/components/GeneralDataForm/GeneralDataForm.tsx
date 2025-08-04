@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MonetaryInput } from "../MonetaryInput/MonetaryInput";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
-import { IGeneralDataFormProps } from "../../Types/Componets/IGeneralDataFormProps";
+import { IGeneralDataFormProps } from "../../../Types/components/IGeneralDataFormProps";
 
 /**
  * GeneralDataForm Component

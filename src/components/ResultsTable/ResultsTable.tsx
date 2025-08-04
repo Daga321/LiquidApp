@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
 import { DynamicTable } from "../DynamicTable/DynamicTable";
-import { ColumnDefinition } from "../../Types/Componets/DynamicTableTypes";
-import { IProperty } from "../../Types/Models/Property";
-import { IResultsTableProps } from "../../Types/Componets/IResultsComponentsProps";
+import { ColumnDefinition } from "../../../Types/components/DynamicTableTypes";
+import { IProperty } from "../../../Types/Models/Property";
+import { IResultsTableProps } from "../../../Types/components/IResultsComponentsProps";
 import { AdjustmentTypeEnum } from "../../Models/Enums/AdjustmentTypeEnum";
-import { IAdjustment } from "../../Types/Models/Adjustment";
+import { IAdjustment } from "../../../Types/Models/Adjustment";
 import "./ResultsTable.css";
 import { LiquidationMethodEnum } from "../../Models/Enums/LiquidationMethodEnum";
 

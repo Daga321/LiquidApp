@@ -1,5 +1,5 @@
 
-import { IResultsHeaderDataProps } from "../../Types/Componets/IResultsComponentsProps";
+import { IResultsHeaderDataProps } from "../../../Types/components/IResultsComponentsProps";
 import "./ResultsHeaderData.css";
 
 /**

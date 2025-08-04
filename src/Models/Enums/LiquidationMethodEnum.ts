@@ -1,4 +1,4 @@
-import { ILiquidationMethodEnum } from '../../Types/Models/Enums/LiquidationMethodEnum';
+import { ILiquidationMethodEnum } from '../../../Types/Models/Enums/LiquidationMethodEnum';
 
 /**
  * Enum to define available liquidation methods.

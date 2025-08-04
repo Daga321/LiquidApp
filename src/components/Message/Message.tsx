@@ -1,5 +1,5 @@
 import './Message.css';
-import { IMessageProps } from '../../Types/Componets/IMessageProps';
+import { IMessageProps } from "../../../Types/components/IMessageProps";
 
 /**
  * Message Component

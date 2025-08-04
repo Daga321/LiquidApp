@@ -1,4 +1,4 @@
-import { TableAnimationOptions, AnimationDirection } from "../../Types/Componets/DynamicTableTypes";
+import { TableAnimationOptions, AnimationDirection } from "../../../Types/components/DynamicTableTypes";
 
 export function updateActions({ tableSelector, onMove, onDelete }: TableAnimationOptions): void {
     const rows = document.querySelectorAll(`${tableSelector} tbody tr`);

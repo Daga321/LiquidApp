@@ -3,7 +3,7 @@ import * as ReactModule from "react";
 import { Header } from './components/Header/Header';
 import { Stepper } from './components/Stepper/Stepper';
 import { LoadingSpinner } from './components/LoadingSpinner/LoadingSpinner';
-import { CurrentStepRef, ViewsConfig } from './Types/Componets/StepperTypes';
+import { CurrentStepRef, ViewsConfig } from '../Types/components/StepperTypes';
 
 import { GeneralData } from './containers/GeneralData/GeneralData';
 import { Properties } from './containers/Properties/Properties';

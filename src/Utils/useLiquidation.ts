@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import { useStateContext } from "./StateContext";
 import { LiquidationMethodEnum } from "../Models/Enums/LiquidationMethodEnum";
 import { AdjustmentTypeEnum } from "../Models/Enums/AdjustmentTypeEnum";
-import { IProperty } from "../Types/Models/Property";
+import { IProperty } from "../../Types/Models/Property";
 
 /**
  * Custom hook for handling liquidation calculations

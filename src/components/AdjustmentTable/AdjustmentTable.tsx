@@ -1,7 +1,7 @@
-import { ColumnDefinition, ActionType } from "../../Types/Componets/DynamicTableTypes";
+import { ColumnDefinition, ActionType } from "../../../Types/components/DynamicTableTypes";
 import { DynamicTable } from "../DynamicTable/DynamicTable";
 import { useStateContext } from "../../Utils/StateContext";
-import { IAdjustmentTableProps } from "../../Types/Componets/IAdjustmentTableProps";
+import { IAdjustmentTableProps } from "../../../Types/components/IAdjustmentTableProps";
 import { AdjustmentTypeEnum } from "../../Models/Enums/AdjustmentTypeEnum";
 
 export function AdjustmentTable({ selectedPropertyId }: IAdjustmentTableProps) {

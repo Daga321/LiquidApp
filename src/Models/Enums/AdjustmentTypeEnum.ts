@@ -1,4 +1,4 @@
-import { IAdjustmentTypeEnum } from '../../Types/Models/Enums/AdjustmentTypeEnum';
+import { IAdjustmentTypeEnum } from '../../../Types/Models/Enums/AdjustmentTypeEnum';
 
 /**
  * Enum to define available adjustment types.

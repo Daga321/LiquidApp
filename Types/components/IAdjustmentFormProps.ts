@@ -1,4 +1,3 @@
-import { IAdjustment } from '../Models/Adjustment';
 import { IAdjustmentFormValidation } from '../Validation/AdjustmentValidation';
 
 /**

@@ -1,5 +1,5 @@
 import './Stepper.css'; // Import the stepper styles
-import { StepperProps } from '../../Types/Componets/StepperTypes';
+import { StepperProps } from "../../../Types/components/StepperTypes";
 
 /**
  * Stepper Component

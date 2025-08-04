@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { MonetaryInputProps } from '../../Types/Componets/MonetaryInputTypes';
+import { MonetaryInputProps } from "../../../Types/components/MonetaryInputTypes";
 
 /**
  * MonetaryInput Component

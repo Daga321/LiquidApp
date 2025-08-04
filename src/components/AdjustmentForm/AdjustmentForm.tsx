@@ -1,7 +1,7 @@
-import { AdjustmentTypeEnum } from "../../Models/Enums/AdjustmentTypeEnum.js";
-import { IAdjustmentFormProps } from "../../Types/Componets/IAdjustmentFormProps.js";
-import { MonetaryInput } from "../MonetaryInput/MonetaryInput.tsx";
-import { ErrorMessage } from "../ErrorMessage/ErrorMessage.tsx";
+import { AdjustmentTypeEnum } from "../../Models/Enums/AdjustmentTypeEnum";
+import { IAdjustmentFormProps } from "../../../Types/components/IAdjustmentFormProps"; // Fixed casing
+import { MonetaryInput } from "../MonetaryInput/MonetaryInput";
+import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 import './Adjustments.css';
 
 /**

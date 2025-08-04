@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { DynamicTable } from "../components/DynamicTable/DynamicTable";
-import { ColumnDefinition, ActionType } from "../Types/Componets/DynamicTableTypes";
+import { ColumnDefinition, ActionType } from "../../Types/components/DynamicTableTypes";
 
 // Example data type
 interface ExampleItem {

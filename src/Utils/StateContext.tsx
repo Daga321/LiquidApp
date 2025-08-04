@@ -1,11 +1,10 @@
 import React, { createContext, useContext, useState } from "react";
-import { IInvoice } from "../Types/Models/Invoice";
-import { IProperty } from "../Types/Models/Property";
-import { IAdjustment } from "../Types/Models/Adjustment";
-import { ILiquidationMethod } from "../Types/Models/Enums/LiquidationMethodEnum";
-import { IAdjustmentType } from "../Types/Models/Enums/AdjustmentTypeEnum";
-import { IStateContextValue } from "../Types/StateContext/IStateContextValue";
-import { IAppState } from "../Types/StateContext/IAppState";
+import { IInvoice } from "../../Types/Models/Invoice";
+import { IProperty } from "../../Types/Models/Property";
+import { IAdjustment } from "../../Types/Models/Adjustment";
+import { ILiquidationMethod } from "../../Types/Models/Enums/LiquidationMethodEnum";
+import { IStateContextValue } from "../../Types/Utils/IStateContextValue";
+import { IAppState } from "../../Types/Utils/IAppState";
 
 // Interface for provider props
 interface IStateProviderProps {

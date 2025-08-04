@@ -3,8 +3,8 @@ import { useStateContext } from "../../Utils/StateContext";
 import { GeneralDataForm } from "../../components/GeneralDataForm/GeneralDataForm";
 import { NextButton } from "../../components/Buttons/NextButton";
 import { GeneralDataValidation } from "../../Validation/GeneralDataValidation";
-import { IValidationResult } from "../../Types/Validation/ValidationBase";
-import { IGeneralDataValidation } from "../../Types/Validation/GeneralDataValidation";
+import { IValidationResult } from "../../../Types/Validation/ValidationBase";
+import { IGeneralDataValidation } from "../../../Types/Validation/GeneralDataValidation";
 
 export function GeneralData() {
     const { data, updateInvoice } = useStateContext();

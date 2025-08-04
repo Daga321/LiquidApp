@@ -5,10 +5,10 @@ import { PropertiesTableForm } from "../../components/PropertiesTableForm/Proper
 import { NextButton } from "../../components/Buttons/NextButton";
 import { BackButton } from "../../components/Buttons/BackButton";
 import { PropertiesValidation } from "../../Validation/PropertiesValidation";
-import { IValidationResult } from "../../Types/Validation/ValidationBase";
-import { IProperty } from "../../Types/Models/Property";
-import { IPropertyFormData, IPropertyValidation } from "../../Types/Validation/PropertiesValidation";
-import { ActionType } from "../../Types/Componets/DynamicTableTypes";
+import { IValidationResult } from "../../../Types/Validation/ValidationBase";
+import { IProperty } from "../../../Types/Models/Property";
+import { IPropertyFormData, IPropertyValidation } from "../../../Types/Validation/PropertiesValidation";
+import { ActionType } from "../../../Types/components/DynamicTableTypes";
 import { LiquidationMethodEnum } from "../../Models/Enums/LiquidationMethodEnum";
 
 export function Properties(){

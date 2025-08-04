@@ -1,15 +1,15 @@
 import { useState, useMemo, useEffect } from "react";
-import { useStateContext } from "../../Utils/StateContext.js";
-import { AdjustmentForm } from "../../components/AdjustmentForm/AdjustmentForm.tsx";
-import { NextButton } from "../../components/Buttons/NextButton.tsx";
-import { BackButton } from "../../components/Buttons/BackButton.tsx";
-import { AdjustmentTable } from "../../components/AdjustmentTable/AdjustmentTable.tsx";
-import { Message } from "../../components/Message/Message.tsx";
-import { PropertySelector } from "../../components/PropertySelector/PropertySelector.tsx";
-import { IAdjustment } from "../../Types/Models/Adjustment.js";
-import { AdjustmentValidation } from "../../Validation/AdjustmentValidation.js";
-import { IValidationResult } from "../../Types/Validation/ValidationBase.js";
-import { IAdjustmentFormValidation } from "../../Types/Validation/AdjustmentValidation.js";
+import { useStateContext } from "../../Utils/StateContext";
+import { AdjustmentForm } from "../../components/AdjustmentForm/AdjustmentForm";
+import { NextButton } from "../../components/Buttons/NextButton";
+import { BackButton } from "../../components/Buttons/BackButton";
+import { AdjustmentTable } from "../../components/AdjustmentTable/AdjustmentTable";
+import { Message } from "../../components/Message/Message";
+import { PropertySelector } from "../../components/PropertySelector/PropertySelector";
+import { IAdjustment } from "../../../Types/Models/Adjustment";
+import { AdjustmentValidation } from "../../Validation/AdjustmentValidation";
+import { IValidationResult } from "../../../Types/Validation/ValidationBase";
+import { IAdjustmentFormValidation } from "../../../Types/Validation/AdjustmentValidation";
 
 export function Adjustment() {
     const { data, addAdjustment } = useStateContext();

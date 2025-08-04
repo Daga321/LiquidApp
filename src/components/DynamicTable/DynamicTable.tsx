@@ -1,5 +1,5 @@
 import { useEffect, useRef, useMemo, Fragment } from "react";
-import { ColumnDefinition, DynamicTableProps, ActionType } from "../../Types/Componets/DynamicTableTypes";
+import { ColumnDefinition, DynamicTableProps, ActionType } from "../../../Types/components/DynamicTableTypes";
 import { updateActions } from "./TableAnimation";
 import "./Table.css";
 import "./TableAnimations.css";

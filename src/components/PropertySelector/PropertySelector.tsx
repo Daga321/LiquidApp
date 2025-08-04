@@ -1,4 +1,4 @@
-import { IPropertySelectorProps } from "../../Types/Componets/IPropertySelectorProps";
+import { IPropertySelectorProps } from "../../../Types/components/IPropertySelectorProps";
 import { ErrorMessage } from "../ErrorMessage/ErrorMessage";
 
 /**
