@@ -11,5 +11,10 @@ export default defineConfig({
     alias: {
       '@': '/src'
     }
+  },
+  test: {
+    include: [
+      'Test/*/*.ts'
+    ]
   }
 })
