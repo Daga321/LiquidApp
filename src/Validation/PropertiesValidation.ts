@@ -1,6 +1,6 @@
-import { ValidationBase } from './ValidationBase.js';
-import { IValidationResult } from '../Types/Validation/ValidationBase.js';
-import { IPropertyFormData, IPropertyValidation } from '../Types/Validation/PropertiesValidation.js';
+import { ValidationBase } from './ValidationBase';
+import { IValidationResult } from '../../Types/Validation/ValidationBase';
+import { IPropertyFormData, IPropertyValidation } from '../../Types/Validation/PropertiesValidation';
 
 /**
  * Specific validation for properties form

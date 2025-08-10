@@ -1,11 +1,11 @@
-import { ValidationBase } from './ValidationBase.js';
-import { IValidationResult } from '../Types/Validation/ValidationBase.js';
+import { ValidationBase } from './ValidationBase';
+import { IValidationResult } from '../../Types/Validation/ValidationBase';
 import { 
   IGeneralDataValidation, 
   IDateValidationData, 
   IServiceValidationData, 
   IMonetaryValidationData 
-} from '../Types/Validation/GeneralDataValidation.js';
+} from '../../Types/Validation/GeneralDataValidation';
 
 /**
  * Specific validation for general data form

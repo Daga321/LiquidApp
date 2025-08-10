@@ -1,7 +1,7 @@
-import { ValidationBase } from './ValidationBase.js';
-import { IValidationResult } from '../Types/Validation/ValidationBase.js';
-import { IAdjustment } from '../Types/Models/Adjustment.js';
-import { IAdjustmentFormValidation } from '../Types/Validation/AdjustmentValidation.js';
+import { ValidationBase } from './ValidationBase';
+import { IValidationResult } from '../../Types/Validation/ValidationBase';
+import { IAdjustment } from '../../Types/Models/Adjustment';
+import { IAdjustmentFormValidation } from '../../Types/Validation/AdjustmentValidation';
 
 /**
  * Specific validation for adjustments form
@@ -57,19 +57,4 @@ export class AdjustmentValidation extends ValidationBase {
     return this.getValidationResult();
   }
 
-  /**
-   * Validates the form to add a new adjustment
-   * @param {IAdjustment} data - Adjustment data
-   * @returns {IValidationResult} Validation result
-   */
-  validateAddAdjustment(data: IAdjustment): IValidationResult {
-    const formData: IAdjustmentFormValidation = {
-      adjustmentName: data.note,
-      adjustmentAmount: data.value,
-      adjustmentType: data.type?.Key || '',
-      selectedPropertyId: '', // This method doesn't have property context
-      applyToAll: false
-    };
-    return this.validate(formData);
-  }
 }

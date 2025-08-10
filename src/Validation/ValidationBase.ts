@@ -1,4 +1,4 @@
-import { IValidationResult } from '../Types/Validation/ValidationBase.js';
+import { IValidationResult } from '../../Types/Validation/ValidationBase';
 
 /**
  * Base class for all validations
